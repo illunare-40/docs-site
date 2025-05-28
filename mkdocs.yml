@@ -1,184 +1,379 @@
-site_name: illunare 4.0 Enterprise - Centralized Documentation
-site_description: Single portal for technical and functional documentation for all illunare 4.0 platform services
-site_author: illunare Engineering Team
-site_url: https://docs.illunare.com
+# ==============================================================================
+# 🚀 illunare 4.0 Enterprise Platform - Documentation Configuration
+# ==============================================================================
 
-repo_name: illunare-40/docs-site
+site_name: illunare 4.0 Enterprise Platform
+site_description: >-
+  Next-generation enterprise platform with AI/ML, industrial connectivity, 
+  automotive integration, biometric security, and quantum-ready infrastructure.
+  Built for Brazilian, LATAM, and worldwide markets.
+
+site_url: https://illunare-40.github.io/docs-site/
 repo_url: https://github.com/illunare-40/docs-site
+repo_name: illunare-40/docs-site
 edit_uri: edit/main/docs/
 
-copyright: Copyright &copy; 2025 illunare. All rights reserved.
+copyright: >
+  Copyright &copy; 2025 illunare 4.0 Enterprise Platform. 
+  All rights reserved. Proprietary and confidential.
+
+# ==============================================================================
+# 🎨 THEME CONFIGURATION - Modern Material Design
+# ==============================================================================
 
 theme:
   name: material
   language: en
+  
+  # Custom branding
+  logo: assets/images/illunare-logo.svg
+  favicon: assets/images/favicon.ico
+  
+  # Color scheme
   palette:
     # Light mode
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       primary: indigo
-      accent: purple
+      accent: cyan
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    # Dark mode
-    - scheme: slate
+    
+    # Dark mode  
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       primary: indigo
-      accent: purple
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+
+  # Typography
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: Inter
+    code: JetBrains Mono
+
+  # Material features
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - navigation.footer
-    - navigation.indexes
-    - search.highlight
-    - search.share
-    - search.suggest
-    - content.code.copy
-    - content.action.edit
-    - content.action.view
-    - toc.follow
-    - toc.integrate
-  icon:
-    repo: fontawesome/brands/github
-    edit: material/pencil
-    view: material/eye
+    # Navigation
+    - navigation.instant       # Instant loading
+    - navigation.tracking      # Anchor tracking
+    - navigation.tabs          # Navigation tabs
+    - navigation.tabs.sticky   # Sticky tabs
+    - navigation.sections      # Navigation sections
+    - navigation.expand        # Expand navigation
+    - navigation.indexes       # Section index pages
+    - navigation.top           # Back to top button
+    - navigation.footer        # Previous/next navigation
+    
+    # Search
+    - search.suggest           # Search suggestions
+    - search.highlight         # Search highlighting
+    - search.share            # Search sharing
+    
+    # Content
+    - content.code.copy       # Copy code blocks
+    - content.code.select     # Select code blocks
+    - content.action.edit     # Edit page action
+    - content.action.view     # View source action
+    
+    # Table of contents
+    - toc.follow              # Follow table of contents
+    - toc.integrate          # Integrate table of contents
 
-plugins:
-  - search:
-      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-  - minify:
-      minify_html: true
-  - git-revision-date-localized:
-      enable_creation_date: true
-      type: date
-  - git-committers:
-      repository: illunare-40/docs-site
-      branch: main
-  - awesome-pages
-  - macros:
-      include_dir: docs/includes
-
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.critic
-  - pymdownx.caret
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.tilde
-  - attr_list
-  - md_in_html
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
-      toc_depth: 3
-  - tables
-  - pymdownx.emoji:
-      emoji_index: materialx.emoji.twemoji
-      emoji_generator: materialx.emoji.to_svg
-  - pymdownx.tasklist:
-      custom_checkbox: true
+# ==============================================================================
+# 📚 NAVIGATION STRUCTURE
+# ==============================================================================
 
 nav:
   - 🏠 Home: index.md
-  - 📋 Overview:
-    - overview/index.md
-    - 'Architecture': overview/architecture.md
-    - 'Roadmap 4.0': overview/roadmap.md
-    - 'Technologies': overview/technologies.md
-  - 🏗️ Infrastructure:
-    - infrastructure/index.md
-    - 'Kubernetes': infrastructure/kubernetes.md
-    - 'Terraform': infrastructure/terraform.md
-    - 'Docker': infrastructure/docker.md
-    - 'CI/CD': infrastructure/cicd.md
+  
+  - 🚀 Getting Started:
+    - getting-started/index.md
+    - Quick Setup: getting-started/quick-setup.md
+    - Installation Guide: getting-started/installation.md
+    - Configuration: getting-started/configuration.md
+    - First Steps: getting-started/first-steps.md
+    - Troubleshooting: getting-started/troubleshooting.md
+  
+  - 🏗️ Architecture:
+    - architecture/index.md
+    - System Overview: architecture/overview.md
+    - Core Components: architecture/components.md
+    - Infrastructure: architecture/infrastructure.md
+    - Security Model: architecture/security.md
+    - Data Flow: architecture/data-flow.md
+    - Integration Patterns: architecture/integration.md
+    - Performance: architecture/performance.md
+  
   - 🔧 Services:
     - services/index.md
-    - 'Core Services': services/core/
-    - 'AI Services': services/ai/
-    - 'Data Services': services/data/
-    - 'Security Services': services/security/
-    - 'Integration Services': services/integration/
-    - 'Frontend Applications': services/frontend/
-  - 🔐 Security:
-    - security/index.md
-    - 'Authentication': security/authentication.md
-    - 'Authorization': security/authorization.md
-    - 'Encryption': security/encryption.md
-    - 'Anti-Abuse': security/anti-abuse.md
-  - 📊 Observability:
-    - observability/index.md
-    - 'Metrics': observability/metrics.md
-    - 'Logs': observability/logs.md
-    - 'Traces': observability/traces.md
-    - 'Alerts': observability/alerts.md
-  - 🚀 Deploy & Operations:
+    - 🎨 Frontend:
+      - services/frontend/index.md
+      - Admin Portal: services/frontend/admin-portal.md
+      - Mobile App: services/frontend/mobile-app.md
+      - Landing Page: services/frontend/landingpage-site.md
+      - E-commerce Portal: services/frontend/ecommerce-portal.md
+    
+    - 🤖 AI & Machine Learning:
+      - services/ai/index.md
+      - AI Decision Layer: services/ai/decision-layer.md
+      - Security Guardian: services/ai/security-guardian.md
+      - Cortex AI Service: services/ai/cortex.md
+      - DeepSeek & Ollama: services/ai/deepseek-ollama.md
+      - ML Infrastructure: services/ai/ml-infrastructure.md
+      - Fraud Detection: services/ai/fraud-detection.md
+    
+    - 🔐 Security Services:
+      - services/security/index.md
+      - Authentication: services/security/auth-service.md
+      - Biometric Verification: services/security/biometric.md
+      - Post-Quantum Crypto: services/security/post-quantum.md
+      - Anti-Abuse Protection: services/security/anti-abuse.md
+      - Identity Service: services/security/identity.md
+    
+    - 📊 Data Services:
+      - services/data/index.md
+      - Data Processing: services/data/processing.md
+      - Datomic Service: services/data/datomic.md
+      - Database Framework: services/data/database.md
+      - Data Consistency: services/data/consistency.md
+      - Storage Service: services/data/storage.md
+      - Quantum Compression: services/data/quantum-compression.md
+    
+    - 🔗 Integration Services:
+      - services/integration/index.md
+      - API Gateway: services/integration/api-gateway.md
+      - Service Integration Layer: services/integration/service-layer.md
+      - Industrial Connectivity: services/integration/industrial.md
+      - Government APIs: services/integration/government-apis.md
+      - Payment Gateways: services/integration/payment-gateways.md
+
+  - 🏭 Industrial Connectivity:
+    - industrial/index.md
+    - Profibus Integration: industrial/profibus.md
+    - Profinet RJ45 Adapters: industrial/profinet.md
+    - Arduino Libraries: industrial/arduino.md
+    - Raspberry Pi Support: industrial/raspberry-pi.md
+    - Medical Devices: industrial/medical.md
+    - Bioinformatics: industrial/bioinformatics.md
+    - GeoGIS Integration: industrial/geogis.md
+    - Engineering Systems: industrial/engineering.md
+
+  - 🚗 Automotive:
+    - automotive/index.md
+    - Vehicle Compliance: automotive/compliance.md
+    - Transportation Management: automotive/transportation.md
+    - Integration Patterns: automotive/integration.md
+    - Supply Chain: automotive/supply-chain.md
+
+  - 🇧🇷 Brazilian Compliance:
+    - compliance/index.md
+    - LGPD Implementation: compliance/lgpd.md
+    - FenSeg Integration: compliance/fenseg.md
+    - SUSEP Compliance: compliance/susep.md
+    - E-Social Bridge: compliance/e-social.md
+    - Tax Calculation LATAM: compliance/tax-latam.md
+    - Government APIs: compliance/government.md
+
+  - 🔥 Hot Reloading & Elixir:
+    - elixir/index.md
+    - Hot Reloading Architecture: elixir/hot-reloading.md
+    - Plug & Play Deployment: elixir/plug-play.md
+    - Production Updates: elixir/production-updates.md
+    - Performance Optimization: elixir/performance.md
+    - GCP Integration: elixir/gcp-integration.md
+
+  - 📡 API Documentation:
+    - api/index.md
+    - REST APIs: api/rest.md
+    - GraphQL: api/graphql.md
+    - gRPC Services: api/grpc.md
+    - WebSocket APIs: api/websocket.md
+    - SDK & Libraries: api/sdks.md
+    - Authentication: api/authentication.md
+    - Rate Limiting: api/rate-limiting.md
+
+  - 🚀 DevOps & Infrastructure:
+    - devops/index.md
+    - CI/CD Pipelines: devops/cicd.md
+    - Infrastructure as Code: devops/iac.md
+    - Kubernetes Manifests: devops/kubernetes.md
+    - Terraform Modules: devops/terraform.md
+    - Docker Containers: devops/docker.md
+    - Monitoring & Observability: devops/monitoring.md
+    - Chaos Engineering: devops/chaos.md
+
+  - 🌍 Deployment:
     - deployment/index.md
-    - 'Environments': deployment/environments.md
-    - 'Pipeline': deployment/pipeline.md
-    - 'Rollback': deployment/rollback.md
-    - 'Disaster Recovery': deployment/disaster-recovery.md
-  - 📱 Frontend:
-    - frontend/index.md
-    - 'Admin Portal': frontend/admin-portal.md
-    - 'Mobile App': frontend/mobile-app.md
-    - 'Landing Page': frontend/landingpage.md
-    - 'Design System': frontend/design-system.md
-  - 🤖 AI & ML:
-    - ai/index.md
-    - 'DeepSeek Integration': ai/deepseek.md
-    - 'Ollama Services': ai/ollama.md
-    - 'Threat Intelligence': ai/threat-intelligence.md
-    - 'Fraud Detection': ai/fraud-detection.md
-  - 🌍 APIs & Integrations:
-    - apis/index.md
-    - 'REST APIs': apis/rest.md
-    - 'GraphQL': apis/graphql.md
-    - 'gRPC': apis/grpc.md
-    - 'Webhooks': apis/webhooks.md
-  - 📚 Contributing:
-    - contributing/index.md
-    - 'Code Standards': contributing/code-standards.md
-    - 'Pull Requests': contributing/pull-requests.md
-    - 'Testing': contributing/testing.md
-    - 'Documentation': contributing/documentation.md
+    - GCP Deployment: deployment/gcp.md
+    - Multi-Region Setup: deployment/multi-region.md
+    - Scaling Strategies: deployment/scaling.md
+    - Security Hardening: deployment/security.md
+    - Performance Tuning: deployment/performance.md
+    - Disaster Recovery: deployment/disaster-recovery.md
+
+  - 📖 Developer Guide:
+    - developer/index.md
+    - Development Setup: developer/setup.md
+    - Coding Standards: developer/standards.md
+    - Testing Guidelines: developer/testing.md
+    - Contributing: developer/contributing.md
+    - Code Review Process: developer/code-review.md
+    - Best Practices: developer/best-practices.md
+
+  - 🆘 Support:
+    - support/index.md
+    - FAQ: support/faq.md
+    - Known Issues: support/known-issues.md
+    - Contact Information: support/contact.md
+    - Community: support/community.md
+    - Enterprise Support: support/enterprise.md
+
+# ==============================================================================
+# 🔌 PLUGINS CONFIGURATION
+# ==============================================================================
+
+plugins:
+  # Core plugins
+  - search:
+      lang: en
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  
+  # Content generation
+  - awesome-pages
+  - macros:
+      module_name: docs/macros
+  
+  # Code documentation
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_toc_entry: false
+  
+  # Git integration
+  - git-revision-date-localized:
+      type: timeago
+      custom_format: "%B %d, %Y"
+      timezone: America/Sao_Paulo
+      locale: en
+      fallback_to_build_date: true
+  
+  # Performance
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      cache_safe: true
+
+# ==============================================================================
+# 📝 MARKDOWN EXTENSIONS
+# ==============================================================================
+
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+      permalink_title: Anchor link to this section
+
+  # PyMdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: illunare-40
+      repo: docs-site
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# ==============================================================================
+# 📁 EXTRA CONFIGURATION
+# ==============================================================================
 
 extra:
+  # Social links
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/illunare-40
-    - icon: fontawesome/brands/docker
-      link: https://hub.docker.com/u/illunare
-  version:
-    provider: mike
-    default: latest
-  analytics:
-    provider: google
-    property: G-XXXXXXXXXX
+      name: illunare 4.0 on GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/company/illunare
+      name: illunare on LinkedIn
+    - icon: fontawesome/solid/globe
+      link: https://illunare.com
+      name: illunare Official Website
+
+  # Enterprise branding
   generator: false
+  
+  # Custom variables
+  enterprise:
+    platform: "illunare 4.0 Enterprise"
+    version: "4.0.0"
+    build_date: "2025-01-28"
+    markets: ["Brazil", "LATAM", "Worldwide"]
+    compliance: ["LGPD", "FenSeg", "SUSEP", "E-Social"]
+    
+  # Feature flags
+  features:
+    ai_enabled: true
+    quantum_ready: true
+    industrial_connectivity: true
+    automotive_integration: true
+    hot_reloading: true
+    multi_region: true
+
+# ==============================================================================
+# 📦 EXTRA FILES
+# ==============================================================================
 
 extra_css:
-  - stylesheets/extra.css
+  - assets/css/extra.css
+  - assets/css/enterprise-theme.css
 
 extra_javascript:
-  - javascripts/extra.js 
+  - assets/js/extra.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# ==============================================================================
+# 🔧 WATCH & DEVELOPMENT
+# ==============================================================================
+
+watch:
+  - docs/
+  - mkdocs.yml 
