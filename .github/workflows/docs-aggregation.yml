@@ -1,0 +1,517 @@
+name: 📚 Docs Aggregation & Deploy
+
+on:
+  schedule:
+    # Executa a cada 30 minutos para manter docs sempre atualizados
+    - cron: '*/30 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/docs-aggregation.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Forçar rebuild completo'
+        required: false
+        default: false
+        type: boolean
+      target_environment:
+        description: 'Ambiente de deploy'
+        required: false
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+  DOCS_SITE_URL: 'https://docs.illunare.com'
+  GCP_PROJECT_ID: 'illunare-enterprise'
+  GCP_REGION: 'us-central1'
+
+jobs:
+  # ==========================================
+  # 1. DESCOBERTA DE REPOSITÓRIOS
+  # ==========================================
+  repository-discovery:
+    name: 🔍 Repository Discovery
+    runs-on: ubuntu-latest
+    outputs:
+      repositories: ${{ steps.discovery.outputs.repositories }}
+      total_repos: ${{ steps.discovery.outputs.total_repos }}
+    steps:
+      - name: 🔍 Discover illunare-40 repositories
+        id: discovery
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ORG_ACCESS_TOKEN }}
+          script: |
+            const repos = [];
+            let page = 1;
+            const perPage = 100;
+            
+            while (true) {
+              const response = await github.rest.repos.listForOrg({
+                org: 'illunare-40',
+                type: 'all',
+                sort: 'updated',
+                per_page: perPage,
+                page: page
+              });
+              
+              if (response.data.length === 0) break;
+              
+              for (const repo of response.data) {
+                // Incluir apenas repositórios com docs/ ou README.md atualizado recentemente
+                if (repo.name.includes('-service') || 
+                    repo.name.includes('-portal') || 
+                    repo.name.includes('-app') ||
+                    repo.name.includes('admin-') ||
+                    repo.name.includes('mobile-') ||
+                    repo.name.includes('landingpage-') ||
+                    repo.name === 'docs-site') {
+                  repos.push({
+                    name: repo.name,
+                    full_name: repo.full_name,
+                    clone_url: repo.clone_url,
+                    ssh_url: repo.ssh_url,
+                    updated_at: repo.updated_at,
+                    default_branch: repo.default_branch,
+                    language: repo.language,
+                    topics: repo.topics || []
+                  });
+                }
+              }
+              
+              page++;
+              if (response.data.length < perPage) break;
+            }
+            
+            console.log(`Descobertos ${repos.length} repositórios`);
+            core.setOutput('repositories', JSON.stringify(repos));
+            core.setOutput('total_repos', repos.length);
+
+  # ==========================================
+  # 2. COLETA DE DOCUMENTAÇÃO
+  # ==========================================
+  docs-collection:
+    name: 📥 Docs Collection
+    runs-on: ubuntu-latest
+    needs: repository-discovery
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.repository-discovery.outputs.repositories) }}
+      max-parallel: 10
+      fail-fast: false
+    steps:
+      - name: 📥 Clone repository ${{ matrix.repo.name }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo.full_name }}
+          token: ${{ secrets.ORG_ACCESS_TOKEN }}
+          path: ./repos/${{ matrix.repo.name }}
+          fetch-depth: 1
+
+      - name: 📋 Extract documentation
+        id: extract
+        run: |
+          REPO_PATH="./repos/${{ matrix.repo.name }}"
+          OUTPUT_PATH="./extracted-docs/${{ matrix.repo.name }}"
+          
+          mkdir -p "$OUTPUT_PATH"
+          
+          # README principal
+          if [[ -f "$REPO_PATH/README.md" ]]; then
+            cp "$REPO_PATH/README.md" "$OUTPUT_PATH/index.md"
+            echo "✅ Extracted README.md"
+          fi
+          
+          # Documentação em docs/
+          if [[ -d "$REPO_PATH/docs" ]]; then
+            cp -r "$REPO_PATH/docs/"* "$OUTPUT_PATH/" 2>/dev/null || true
+            echo "✅ Extracted docs/ directory"
+          fi
+          
+          # API documentation
+          if [[ -d "$REPO_PATH/api-docs" ]]; then
+            mkdir -p "$OUTPUT_PATH/api"
+            cp -r "$REPO_PATH/api-docs/"* "$OUTPUT_PATH/api/" 2>/dev/null || true
+            echo "✅ Extracted API docs"
+          fi
+          
+          # OpenAPI specs
+          find "$REPO_PATH" -name "*.yaml" -o -name "*.yml" -o -name "*.json" | \
+            grep -E "(openapi|swagger|api-spec)" | while read file; do
+            if [[ -f "$file" ]]; then
+              mkdir -p "$OUTPUT_PATH/specs"
+              cp "$file" "$OUTPUT_PATH/specs/"
+              echo "✅ Extracted spec: $(basename $file)"
+            fi
+          done
+          
+          # Dockerfile para entender stack
+          if [[ -f "$REPO_PATH/Dockerfile" ]]; then
+            mkdir -p "$OUTPUT_PATH/deployment"
+            cp "$REPO_PATH/Dockerfile" "$OUTPUT_PATH/deployment/"
+            echo "✅ Extracted Dockerfile"
+          fi
+          
+          # Package files para dependências
+          for pkg_file in package.json go.mod Cargo.toml requirements.txt; do
+            if [[ -f "$REPO_PATH/$pkg_file" ]]; then
+              mkdir -p "$OUTPUT_PATH/dependencies"
+              cp "$REPO_PATH/$pkg_file" "$OUTPUT_PATH/dependencies/"
+              echo "✅ Extracted $pkg_file"
+            fi
+          done
+          
+          # Metadata do repositório
+          cat > "$OUTPUT_PATH/.repo-metadata.json" << EOF
+          {
+            "name": "${{ matrix.repo.name }}",
+            "full_name": "${{ matrix.repo.full_name }}",
+            "language": "${{ matrix.repo.language }}",
+            "topics": ${{ toJson(matrix.repo.topics) }},
+            "updated_at": "${{ matrix.repo.updated_at }}",
+            "extracted_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "default_branch": "${{ matrix.repo.default_branch }}"
+          }
+          EOF
+          
+          # Verificar se tem conteúdo
+          if [[ -n "$(find "$OUTPUT_PATH" -name "*.md" -type f)" ]]; then
+            echo "has_docs=true" >> $GITHUB_OUTPUT
+            echo "✅ Documentação extraída para ${{ matrix.repo.name }}"
+          else
+            echo "has_docs=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Nenhuma documentação encontrada para ${{ matrix.repo.name }}"
+          fi
+
+      - name: 📤 Upload extracted docs
+        if: steps.extract.outputs.has_docs == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-${{ matrix.repo.name }}
+          path: ./extracted-docs/${{ matrix.repo.name }}
+          retention-days: 1
+
+  # ==========================================
+  # 3. AGREGAÇÃO E BUILD
+  # ==========================================
+  docs-aggregation:
+    name: 🔧 Docs Aggregation
+    runs-on: ubuntu-latest
+    needs: [repository-discovery, docs-collection]
+    steps:
+      - name: 📥 Checkout docs-site
+        uses: actions/checkout@v4
+        with:
+          path: ./docs-site
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install dependencies
+        working-directory: ./docs-site
+        run: |
+          pip install -r requirements.txt
+
+      - name: 📥 Download all extracted docs
+        uses: actions/download-artifact@v4
+        with:
+          path: ./extracted-docs
+          pattern: docs-*
+
+      - name: 🔧 Generate navigation and aggregate docs
+        id: aggregate
+        run: |
+          cd docs-site
+          
+          # Script Python para agregação
+          cat > aggregate_docs.py << 'EOF'
+          import os
+          import json
+          import yaml
+          import shutil
+          from pathlib import Path
+          from datetime import datetime
+          
+          def load_repo_metadata(docs_path):
+              metadata_file = docs_path / '.repo-metadata.json'
+              if metadata_file.exists():
+                  with open(metadata_file) as f:
+                      return json.load(f)
+              return {}
+          
+          def categorize_service(repo_name, metadata):
+              """Categoriza serviços baseado no nome e metadata"""
+              name = repo_name.lower()
+              language = metadata.get('language', '').lower()
+              topics = metadata.get('topics', [])
+              
+              if 'admin-portal' in name or 'mobile-app' in name or 'landingpage' in name:
+                  return 'frontend'
+              elif any(x in name for x in ['ai-', 'ml-', 'deepseek', 'ollama', 'cortex']):
+                  return 'ai'
+              elif any(x in name for x in ['security', 'auth', 'biometric', 'fraud']):
+                  return 'security'
+              elif any(x in name for x in ['db-', 'storage', 'data-', 'datomic']):
+                  return 'data'
+              elif any(x in name for x in ['gateway', 'integration', 'connector']):
+                  return 'integration'
+              else:
+                  return 'core'
+          
+          def generate_service_index(services_by_category):
+              """Gera index dos serviços por categoria"""
+              content = """# 🔧 Serviços da Plataforma illunare 4.0
+          
+          Este é o índice completo de todos os microserviços e componentes da plataforma illunare 4.0 Enterprise.
+          
+          """
+              
+              # Estatísticas
+              total_services = sum(len(services) for services in services_by_category.values())
+              content += f"📊 **Total de Serviços**: {total_services}\n\n"
+              
+              categories = {
+                  'frontend': '🎨 Frontend Applications',
+                  'ai': '🤖 AI & Machine Learning',
+                  'security': '🔐 Security Services', 
+                  'data': '📊 Data Services',
+                  'integration': '🔗 Integration Services',
+                  'core': '⚙️ Core Services'
+              }
+              
+              for category, title in categories.items():
+                  if category in services_by_category and services_by_category[category]:
+                      content += f"## {title}\n\n"
+                      
+                      for service in sorted(services_by_category[category], key=lambda x: x['name']):
+                          metadata = service['metadata']
+                          name = service['name']
+                          language = metadata.get('language', 'Unknown')
+                          updated = metadata.get('updated_at', '')
+                          if updated:
+                              updated = datetime.fromisoformat(updated.replace('Z', '+00:00')).strftime('%d/%m/%Y')
+                          
+                          # Status badge baseado na linguagem
+                          lang_badge = {
+                              'typescript': '![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)',
+                              'javascript': '![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)',
+                              'go': '![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)',
+                              'rust': '![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)',
+                              'python': '![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)',
+                              'elixir': '![Elixir](https://img.shields.io/badge/Elixir-4B275F?style=flat&logo=elixir&logoColor=white)',
+                              'dart': '![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white)'
+                          }.get(language.lower(), f'![{language}](https://img.shields.io/badge/{language}-gray?style=flat)')
+                          
+                          content += f"### [{name}]({category}/{name}/index.md)\n\n"
+                          content += f"{lang_badge} "
+                          content += f"📅 {updated}\n\n"
+                          
+                          # Descrição se disponível
+                          if 'description' in metadata:
+                              content += f"{metadata['description']}\n\n"
+                          
+                          content += "---\n\n"
+              
+              return content
+          
+          # Diretório principal de docs
+          docs_dir = Path('docs')
+          services_dir = docs_dir / 'services'
+          
+          # Criar estrutura de diretórios
+          for category in ['core', 'ai', 'data', 'security', 'integration', 'frontend']:
+              (services_dir / category).mkdir(parents=True, exist_ok=True)
+          
+          # Processar documentações extraídas
+          extracted_base = Path('../extracted-docs')
+          services_by_category = {}
+          
+          for docs_artifact in extracted_base.iterdir():
+              if docs_artifact.is_dir() and docs_artifact.name.startswith('docs-'):
+                  repo_name = docs_artifact.name[5:]  # Remove 'docs-' prefix
+                  
+                  # Carregar metadata
+                  metadata = load_repo_metadata(docs_artifact)
+                  category = categorize_service(repo_name, metadata)
+                  
+                  if category not in services_by_category:
+                      services_by_category[category] = []
+                  
+                  services_by_category[category].append({
+                      'name': repo_name,
+                      'metadata': metadata,
+                      'path': docs_artifact
+                  })
+                  
+                  # Copiar documentação para categoria apropriada
+                  target_dir = services_dir / category / repo_name
+                  if target_dir.exists():
+                      shutil.rmtree(target_dir)
+                  
+                  shutil.copytree(docs_artifact, target_dir)
+                  print(f"✅ Copiado {repo_name} para {category}/")
+          
+          # Gerar índice de serviços
+          services_index = generate_service_index(services_by_category)
+          with open(services_dir / 'index.md', 'w') as f:
+              f.write(services_index)
+          
+          # Atualizar mkdocs.yml com navegação dinâmica
+          with open('mkdocs.yml', 'r') as f:
+              mkdocs_config = yaml.safe_load(f)
+          
+          # Atualizar seção de serviços na navegação
+          for item in mkdocs_config['nav']:
+              if isinstance(item, dict) and '🔧 Serviços' in item:
+                  services_nav = [
+                      'services/index.md'
+                  ]
+                  
+                  # Adicionar categorias
+                  category_titles = {
+                      'frontend': '🎨 Frontend Applications',
+                      'ai': '🤖 AI Services',
+                      'security': '🔐 Security Services',
+                      'data': '📊 Data Services',
+                      'integration': '🔗 Integration Services',
+                      'core': '⚙️ Core Services'
+                  }
+                  
+                  for category, title in category_titles.items():
+                      if category in services_by_category:
+                          services_nav.append(f'services/{category}/')
+                  
+                  item['🔧 Serviços'] = services_nav
+                  break
+          
+          # Salvar mkdocs.yml atualizado
+          with open('mkdocs.yml', 'w') as f:
+              yaml.dump(mkdocs_config, f, default_flow_style=False, allow_unicode=True)
+          
+          print(f"✅ Agregação concluída: {sum(len(services) for services in services_by_category.values())} serviços processados")
+          EOF
+          
+          python aggregate_docs.py
+
+      - name: 🏗️ Build MkDocs site
+        working-directory: ./docs-site
+        run: |
+          mkdocs build --strict --verbose
+
+      - name: 📊 Generate build report
+        working-directory: ./docs-site
+        run: |
+          echo "# 📊 Build Report - $(date)" > build-report.md
+          echo "" >> build-report.md
+          echo "## 📈 Estatísticas" >> build-report.md
+          echo "- **Total de páginas**: $(find site -name "*.html" | wc -l)" >> build-report.md
+          echo "- **Tamanho do site**: $(du -sh site | cut -f1)" >> build-report.md
+          echo "- **Repositórios processados**: ${{ needs.repository-discovery.outputs.total_repos }}" >> build-report.md
+          echo "- **Tempo de build**: $(date)" >> build-report.md
+          echo "" >> build-report.md
+          echo "## 🔗 Links" >> build-report.md
+          echo "- **Site**: ${{ env.DOCS_SITE_URL }}" >> build-report.md
+          echo "- **Repositório**: https://github.com/illunare-40/docs-site" >> build-report.md
+
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site-build
+          path: ./docs-site/site/
+          retention-days: 7
+
+      - name: 📤 Upload build report
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report
+          path: ./docs-site/build-report.md
+          retention-days: 7
+
+  # ==========================================
+  # 4. DEPLOY
+  # ==========================================
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: docs-aggregation
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: ${{ env.DOCS_SITE_URL }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-site-build
+          path: ./site
+
+      - name: 📄 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📤 Upload to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+      - name: 🚀 Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ==========================================
+  # 5. NOTIFICAÇÃO
+  # ==========================================
+  notification:
+    name: 📢 Notification
+    runs-on: ubuntu-latest
+    needs: [repository-discovery, docs-collection, docs-aggregation, deploy]
+    if: always()
+    steps:
+      - name: 📊 Calculate success rate
+        id: stats
+        run: |
+          TOTAL_REPOS=${{ needs.repository-discovery.outputs.total_repos }}
+          SUCCESSFUL_JOBS=$(echo '${{ toJson(needs.docs-collection.result) }}' | grep -o 'success' | wc -l || echo "0")
+          SUCCESS_RATE=$((SUCCESSFUL_JOBS * 100 / TOTAL_REPOS))
+          
+          echo "total_repos=$TOTAL_REPOS" >> $GITHUB_OUTPUT
+          echo "successful_jobs=$SUCCESSFUL_JOBS" >> $GITHUB_OUTPUT
+          echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+
+      - name: 📢 Success notification
+        if: needs.deploy.result == 'success'
+        run: |
+          echo "✅ Documentação atualizada com sucesso!"
+          echo "📊 Repositórios processados: ${{ steps.stats.outputs.successful_jobs }}/${{ steps.stats.outputs.total_repos }}"
+          echo "📈 Taxa de sucesso: ${{ steps.stats.outputs.success_rate }}%"
+          echo "🔗 Site: ${{ env.DOCS_SITE_URL }}"
+
+      - name: ⚠️ Failure notification
+        if: failure()
+        run: |
+          echo "❌ Falha na atualização da documentação"
+          echo "📊 Status dos jobs:"
+          echo "  - Repository Discovery: ${{ needs.repository-discovery.result }}"
+          echo "  - Docs Collection: ${{ needs.docs-collection.result }}"
+          echo "  - Docs Aggregation: ${{ needs.docs-aggregation.result }}"
+          echo "  - Deploy: ${{ needs.deploy.result }}" 

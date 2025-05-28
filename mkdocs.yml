@@ -1,0 +1,184 @@
+site_name: illunare 4.0 Enterprise - Centralized Documentation
+site_description: Single portal for technical and functional documentation for all illunare 4.0 platform services
+site_author: illunare Engineering Team
+site_url: https://docs.illunare.com
+
+repo_name: illunare-40/docs-site
+repo_url: https://github.com/illunare-40/docs-site
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2025 illunare. All rights reserved.
+
+theme:
+  name: material
+  language: en
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - toc.follow
+    - toc.integrate
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: date
+  - git-committers:
+      repository: illunare-40/docs-site
+      branch: main
+  - awesome-pages
+  - macros:
+      include_dir: docs/includes
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+  - pymdownx.emoji:
+      emoji_index: materialx.emoji.twemoji
+      emoji_generator: materialx.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - 🏠 Home: index.md
+  - 📋 Overview:
+    - overview/index.md
+    - 'Architecture': overview/architecture.md
+    - 'Roadmap 4.0': overview/roadmap.md
+    - 'Technologies': overview/technologies.md
+  - 🏗️ Infrastructure:
+    - infrastructure/index.md
+    - 'Kubernetes': infrastructure/kubernetes.md
+    - 'Terraform': infrastructure/terraform.md
+    - 'Docker': infrastructure/docker.md
+    - 'CI/CD': infrastructure/cicd.md
+  - 🔧 Services:
+    - services/index.md
+    - 'Core Services': services/core/
+    - 'AI Services': services/ai/
+    - 'Data Services': services/data/
+    - 'Security Services': services/security/
+    - 'Integration Services': services/integration/
+    - 'Frontend Applications': services/frontend/
+  - 🔐 Security:
+    - security/index.md
+    - 'Authentication': security/authentication.md
+    - 'Authorization': security/authorization.md
+    - 'Encryption': security/encryption.md
+    - 'Anti-Abuse': security/anti-abuse.md
+  - 📊 Observability:
+    - observability/index.md
+    - 'Metrics': observability/metrics.md
+    - 'Logs': observability/logs.md
+    - 'Traces': observability/traces.md
+    - 'Alerts': observability/alerts.md
+  - 🚀 Deploy & Operations:
+    - deployment/index.md
+    - 'Environments': deployment/environments.md
+    - 'Pipeline': deployment/pipeline.md
+    - 'Rollback': deployment/rollback.md
+    - 'Disaster Recovery': deployment/disaster-recovery.md
+  - 📱 Frontend:
+    - frontend/index.md
+    - 'Admin Portal': frontend/admin-portal.md
+    - 'Mobile App': frontend/mobile-app.md
+    - 'Landing Page': frontend/landingpage.md
+    - 'Design System': frontend/design-system.md
+  - 🤖 AI & ML:
+    - ai/index.md
+    - 'DeepSeek Integration': ai/deepseek.md
+    - 'Ollama Services': ai/ollama.md
+    - 'Threat Intelligence': ai/threat-intelligence.md
+    - 'Fraud Detection': ai/fraud-detection.md
+  - 🌍 APIs & Integrations:
+    - apis/index.md
+    - 'REST APIs': apis/rest.md
+    - 'GraphQL': apis/graphql.md
+    - 'gRPC': apis/grpc.md
+    - 'Webhooks': apis/webhooks.md
+  - 📚 Contributing:
+    - contributing/index.md
+    - 'Code Standards': contributing/code-standards.md
+    - 'Pull Requests': contributing/pull-requests.md
+    - 'Testing': contributing/testing.md
+    - 'Documentation': contributing/documentation.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/illunare-40
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/illunare
+  version:
+    provider: mike
+    default: latest
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+  generator: false
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js 
