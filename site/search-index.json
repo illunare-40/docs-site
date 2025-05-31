@@ -1,0 +1,17 @@
+[
+  {
+    "title": "illunare 4.0 Documentation",
+    "url": "/",
+    "content": "Welcome to the comprehensive documentation for the illunare 4.0 Enterprise Platform"
+  },
+  {
+    "title": "Services Overview",
+    "url": "/docs/services/",
+    "content": "Complete overview of all illunare 4.0 platform services and microservices"
+  },
+  {
+    "title": "Getting Started",
+    "url": "/docs/getting-started/",
+    "content": "Quick start guides and setup instructions for the illunare 4.0 platform"
+  }
+]

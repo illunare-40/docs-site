@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on illunare 4.0 Enterprise Platform</title>
+    <link>https://illunare-40.github.io/docs-site/categories/</link>
+    <description>Recent content in Categories on illunare 4.0 Enterprise Platform</description>
+    <generator>Hugo</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://illunare-40.github.io/docs-site/categories/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Documentation</title>
+      <link>https://illunare-40.github.io/docs-site/categories/documentation/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://illunare-40.github.io/docs-site/categories/documentation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Enterprise</title>
+      <link>https://illunare-40.github.io/docs-site/categories/enterprise/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://illunare-40.github.io/docs-site/categories/enterprise/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hub</title>
+      <link>https://illunare-40.github.io/docs-site/categories/hub/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://illunare-40.github.io/docs-site/categories/hub/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Platform</title>
+      <link>https://illunare-40.github.io/docs-site/categories/platform/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://illunare-40.github.io/docs-site/categories/platform/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

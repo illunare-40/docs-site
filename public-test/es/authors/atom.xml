@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors on illunare 4.0 Enterprise Platform</title>
+    <link>https://illunare-40.github.io/docs-site/es/authors/</link>
+    <description>Recent content in Authors on illunare 4.0 Enterprise Platform</description>
+    <generator>Hugo</generator>
+    <language>es</language>
+    <atom:link href="https://illunare-40.github.io/docs-site/es/authors/atom.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

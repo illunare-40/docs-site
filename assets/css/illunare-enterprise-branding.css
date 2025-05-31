@@ -1,0 +1,592 @@
+/* ==============================================================================
+ * 🚀 illunare 4.0 Enterprise Platform - Ultra-Modern Branding & Styling
+ * COMPREHENSIVE ENTERPRISE DESIGN SYSTEM
+ * ============================================================================== */
+
+/* 🎨 Custom Properties - Enterprise Color Palette */
+:root {
+  /* Primary Brand Colors */
+  --illunare-primary: #3f51b5;
+  --illunare-primary-light: #7986cb;
+  --illunare-primary-dark: #303f9f;
+  --illunare-secondary: #00bcd4;
+  --illunare-secondary-light: #4dd0e1;
+  --illunare-secondary-dark: #00838f;
+  --illunare-accent: #ff4081;
+  --illunare-accent-light: #ff80ab;
+  --illunare-accent-dark: #c51162;
+  
+  /* Enterprise Gradients */
+  --illunare-gradient-primary: linear-gradient(135deg, var(--illunare-primary) 0%, var(--illunare-secondary) 100%);
+  --illunare-gradient-secondary: linear-gradient(135deg, var(--illunare-secondary) 0%, var(--illunare-accent) 100%);
+  --illunare-gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  
+  /* AI & Technology Colors */
+  --illunare-ai-blue: #1976d2;
+  --illunare-ai-purple: #7b1fa2;
+  --illunare-ai-green: #388e3c;
+  --illunare-tech-orange: #f57c00;
+  --illunare-industrial-teal: #00695c;
+  
+  /* Status Colors */
+  --illunare-success: #4caf50;
+  --illunare-warning: #ff9800;
+  --illunare-error: #f44336;
+  --illunare-info: #2196f3;
+  
+  /* Enterprise Typography */
+  --illunare-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --illunare-font-code: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
+  
+  /* Enterprise Spacing */
+  --illunare-spacing-xs: 0.25rem;
+  --illunare-spacing-sm: 0.5rem;
+  --illunare-spacing-md: 1rem;
+  --illunare-spacing-lg: 1.5rem;
+  --illunare-spacing-xl: 2rem;
+  --illunare-spacing-xxl: 3rem;
+  
+  /* Enterprise Shadows */
+  --illunare-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --illunare-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --illunare-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --illunare-shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.25);
+  
+  /* Enterprise Border Radius */
+  --illunare-radius-sm: 4px;
+  --illunare-radius-md: 8px;
+  --illunare-radius-lg: 12px;
+  --illunare-radius-xl: 16px;
+  
+  /* Animation Timings */
+  --illunare-transition-fast: 0.15s ease-out;
+  --illunare-transition-normal: 0.3s ease-out;
+  --illunare-transition-slow: 0.5s ease-out;
+}
+
+/* Dark Mode Variables */
+[data-md-color-scheme="slate"] {
+  --illunare-gradient-primary: linear-gradient(135deg, #5c6bc0 0%, #26c6da 100%);
+  --illunare-gradient-secondary: linear-gradient(135deg, #26c6da 0%, #ec407a 100%);
+  --illunare-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --illunare-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --illunare-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ==============================================================================
+ * 🏢 Enterprise Header & Branding
+ * ============================================================================== */
+
+.md-header {
+  background: var(--illunare-gradient-primary);
+  box-shadow: var(--illunare-shadow-md);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.md-header__title {
+  font-family: var(--illunare-font-primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #ffffff 0%, #e3f2fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.md-header__button {
+  transition: var(--illunare-transition-normal);
+  border-radius: var(--illunare-radius-md);
+}
+
+.md-header__button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Logo Enhancement */
+.md-header__inner {
+  position: relative;
+}
+
+.md-header__inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--illunare-gradient-primary);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+/* ==============================================================================
+ * 🎯 Enterprise Navigation
+ * ============================================================================== */
+
+.md-nav {
+  font-family: var(--illunare-font-primary);
+}
+
+.md-nav__title {
+  font-weight: 600;
+  color: var(--illunare-primary);
+  border-bottom: 2px solid var(--illunare-primary);
+  padding-bottom: var(--illunare-spacing-sm);
+  margin-bottom: var(--illunare-spacing-md);
+}
+
+.md-nav__link {
+  transition: var(--illunare-transition-normal);
+  border-radius: var(--illunare-radius-sm);
+  margin: 2px 0;
+  padding: 8px 12px;
+}
+
+.md-nav__link:hover {
+  background: var(--illunare-gradient-primary);
+  color: white;
+  transform: translateX(4px);
+  box-shadow: var(--illunare-shadow-sm);
+}
+
+.md-nav__link--active {
+  background: var(--illunare-gradient-secondary);
+  color: white;
+  font-weight: 600;
+  box-shadow: var(--illunare-shadow-md);
+}
+
+/* Enterprise Tabs */
+.md-tabs {
+  background: var(--illunare-gradient-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.md-tabs__link {
+  font-weight: 500;
+  transition: var(--illunare-transition-normal);
+  border-radius: var(--illunare-radius-md) var(--illunare-radius-md) 0 0;
+  margin: 0 2px;
+}
+
+.md-tabs__link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.md-tabs__link--active {
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom: 3px solid var(--illunare-accent);
+}
+
+/* ==============================================================================
+ * 📝 Enterprise Content Styling
+ * ============================================================================== */
+
+.md-content {
+  font-family: var(--illunare-font-primary);
+  line-height: 1.7;
+}
+
+.md-content h1 {
+  background: var(--illunare-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin-bottom: var(--illunare-spacing-lg);
+  position: relative;
+}
+
+.md-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--illunare-gradient-secondary);
+  border-radius: var(--illunare-radius-sm);
+}
+
+.md-content h2 {
+  color: var(--illunare-primary);
+  font-weight: 700;
+  border-bottom: 2px solid var(--illunare-secondary);
+  padding-bottom: var(--illunare-spacing-sm);
+  margin-top: var(--illunare-spacing-xl);
+}
+
+.md-content h3 {
+  color: var(--illunare-ai-blue);
+  font-weight: 600;
+  position: relative;
+  padding-left: 20px;
+}
+
+.md-content h3::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: var(--illunare-accent);
+  font-size: 0.8em;
+}
+
+/* Enhanced Code Blocks */
+.md-content code {
+  background: var(--illunare-gradient-dark);
+  color: #e3f2fd;
+  padding: 2px 6px;
+  border-radius: var(--illunare-radius-sm);
+  font-family: var(--illunare-font-code);
+  border: 1px solid var(--illunare-secondary);
+}
+
+.md-content pre {
+  background: var(--illunare-gradient-dark);
+  border: 1px solid var(--illunare-secondary);
+  border-radius: var(--illunare-radius-lg);
+  box-shadow: var(--illunare-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.md-content pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(90deg, var(--illunare-primary) 0%, var(--illunare-secondary) 100%);
+  z-index: 1;
+}
+
+.md-content pre code {
+  background: transparent;
+  border: none;
+  display: block;
+  padding: 40px 20px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ==============================================================================
+ * 🎨 Enterprise Admonitions
+ * ============================================================================== */
+
+.md-typeset .admonition {
+  border-radius: var(--illunare-radius-lg);
+  box-shadow: var(--illunare-shadow-md);
+  overflow: hidden;
+  border: none;
+  margin: var(--illunare-spacing-lg) 0;
+}
+
+.md-typeset .admonition.note {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-left: 4px solid var(--illunare-info);
+}
+
+.md-typeset .admonition.tip {
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  border-left: 4px solid var(--illunare-success);
+}
+
+.md-typeset .admonition.warning {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%);
+  border-left: 4px solid var(--illunare-warning);
+}
+
+.md-typeset .admonition.danger {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-left: 4px solid var(--illunare-error);
+}
+
+.md-typeset .admonition-title {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.9);
+  margin: -16px -16px 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================================================================
+ * 🔗 Enterprise Links & Buttons
+ * ============================================================================== */
+
+.md-content a {
+  color: var(--illunare-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: var(--illunare-transition-normal);
+  font-weight: 500;
+}
+
+.md-content a:hover {
+  color: var(--illunare-accent);
+  border-bottom-color: var(--illunare-accent);
+  transform: translateY(-1px);
+}
+
+/* Enterprise Buttons */
+.btn-illunare {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--illunare-gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--illunare-radius-lg);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--illunare-transition-normal);
+  box-shadow: var(--illunare-shadow-md);
+  cursor: pointer;
+}
+
+.btn-illunare:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--illunare-shadow-lg);
+  background: var(--illunare-gradient-secondary);
+}
+
+.btn-illunare-outline {
+  background: transparent;
+  border: 2px solid var(--illunare-primary);
+  color: var(--illunare-primary);
+}
+
+.btn-illunare-outline:hover {
+  background: var(--illunare-primary);
+  color: white;
+}
+
+/* ==============================================================================
+ * 📊 Enterprise Tables
+ * ============================================================================== */
+
+.md-typeset table {
+  border-radius: var(--illunare-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--illunare-shadow-md);
+  border: none;
+  background: white;
+}
+
+.md-typeset table thead tr {
+  background: var(--illunare-gradient-primary);
+  color: white;
+}
+
+.md-typeset table thead th {
+  font-weight: 700;
+  text-align: left;
+  padding: 16px;
+  border: none;
+}
+
+.md-typeset table tbody tr {
+  transition: var(--illunare-transition-fast);
+}
+
+.md-typeset table tbody tr:hover {
+  background: rgba(63, 81, 181, 0.05);
+  transform: scale(1.001);
+}
+
+.md-typeset table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ==============================================================================
+ * 🎯 Enterprise Search
+ * ============================================================================== */
+
+.md-search__form {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--illunare-radius-lg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.md-search__input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: var(--illunare-font-primary);
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.md-search-result {
+  border-radius: var(--illunare-radius-md);
+  box-shadow: var(--illunare-shadow-sm);
+  margin-bottom: var(--illunare-spacing-sm);
+  overflow: hidden;
+}
+
+/* ==============================================================================
+ * 🔄 Enterprise Animations
+ * ============================================================================== */
+
+@keyframes illunare-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes illunare-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes illunare-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.illunare-animate-fade-in {
+  animation: illunare-fade-in 0.6s ease-out;
+}
+
+.illunare-animate-slide-in {
+  animation: illunare-slide-in 0.5s ease-out;
+}
+
+.illunare-animate-pulse {
+  animation: illunare-pulse 2s infinite;
+}
+
+/* ==============================================================================
+ * 📱 Enterprise Mobile Optimizations
+ * ============================================================================== */
+
+@media (max-width: 768px) {
+  .md-content h1 {
+    font-size: 2rem;
+  }
+  
+  .md-nav__link {
+    padding: 12px;
+  }
+  
+  .btn-illunare {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+  
+  .md-typeset table {
+    font-size: 0.9rem;
+  }
+  
+  .md-typeset table thead th,
+  .md-typeset table tbody td {
+    padding: 8px 12px;
+  }
+}
+
+/* ==============================================================================
+ * 🎨 Enterprise Status Indicators
+ * ============================================================================== */
+
+.status-indicator {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: var(--illunare-radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: var(--illunare-success);
+  color: white;
+}
+
+.status-warning {
+  background: var(--illunare-warning);
+  color: white;
+}
+
+.status-error {
+  background: var(--illunare-error);
+  color: white;
+}
+
+.status-info {
+  background: var(--illunare-info);
+  color: white;
+}
+
+/* ==============================================================================
+ * 🚀 Enterprise Footer
+ * ============================================================================== */
+
+.md-footer {
+  background: var(--illunare-gradient-dark);
+  border-top: 3px solid var(--illunare-primary);
+}
+
+.md-footer-meta {
+  background: var(--illunare-gradient-primary);
+  color: white;
+}
+
+.md-footer-meta__inner {
+  font-family: var(--illunare-font-primary);
+  font-weight: 500;
+}
+
+/* ==============================================================================
+ * 🎯 Enterprise Print Styles
+ * ============================================================================== */
+
+@media print {
+  .md-header,
+  .md-tabs,
+  .md-nav,
+  .md-sidebar {
+    display: none !important;
+  }
+  
+  .md-content {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .md-content h1,
+  .md-content h2,
+  .md-content h3 {
+    color: black !important;
+    -webkit-text-fill-color: black !important;
+  }
+  
+  .md-content pre,
+  .md-content code {
+    background: #f5f5f5 !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+  }
+} 

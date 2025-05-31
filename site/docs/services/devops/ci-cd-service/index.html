@@ -1,0 +1,767 @@
+<!doctype html><html lang=pt-br><head><meta charset=utf-8><title>ci-cd-service | illunare 4.0 Enterprise Platform</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Continuous integration and deployment"><meta name=keywords content="Documentation,Hugo,Hugo Theme,Bootstrap"><meta name=author content="Colin Wilson - Lotus Labs"><meta name=email content="support@aigis.uk"><meta name=website content="https://lotusdocs.dev"><meta name=Version content="v0.1.0"><link rel=icon href=https://illunare-40.github.io/docs-site/favicon.ico sizes=any><link rel=icon type=image/svg+xml href=https://illunare-40.github.io/docs-site/favicon.svg><link rel=apple-touch-icon sizes=180x180 href=https://illunare-40.github.io/docs-site/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://illunare-40.github.io/docs-site/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://illunare-40.github.io/docs-site/favicon-16x16.png><link rel=manifest crossorigin=use-credentials href=https://illunare-40.github.io/docs-site/site.webmanifest><meta property="og:title" content="ci-cd-service"><meta property="og:description" content="Continuous integration and deployment"><meta property="og:type" content="website"><meta property="og:url" content="https://illunare-40.github.io/docs-site/docs/services/devops/ci-cd-service/"><meta property="og:image" content="https://illunare-40.github.io/docs-site/opengraph/card-base-2_hu_c037b927ca8ba202.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://illunare-40.github.io/docs-site/opengraph/card-base-2_hu_c037b927ca8ba202.png"><meta name=twitter:title content="ci-cd-service"><meta name=twitter:description content="Continuous integration and deployment"><meta name=twitter:site content="@@illunare40"><link rel=alternate type=application/atom+xml title="Atom feed for illunare 4.0 Enterprise Platform" href=/index.xml><script type=text/javascript src=https://illunare-40.github.io/docs-site/docs/js/flexsearch.bundle.min.f5159d5a2151ffbb653996ec17eaff7da4e04c286bd879fc41839d36a5586f3f20eaead0b6089de48f9adc669cdee771.js integrity=sha384-9RWdWiFR/7tlOZbsF+r/faTgTChr2Hn8QYOdNqVYbz8g6urQtgid5I+a3Gac3udx crossorigin=anonymous></script><link rel=stylesheet href=/docs-site/docs/scss/style.min.94fee05fa25a5e26482691f6e5d11d409c5093fecafcd881bc7611f06bf914c13dbf0885b02ee068fae2dd651df17ef6.css integrity=sha384-lP7gX6JaXiZIJpH25dEdQJxQk/7K/NiBvHYR8Gv5FME9vwiFsC7gaPri3WUd8X72 crossorigin=anonymous></head><body><div class=content><div class="page-wrapper toggled"><nav id=sidebar class=sidebar-wrapper><div class=sidebar-brand><a href=/docs-site/ aria-label=HomePage alt=HomePage><svg id="Layer_1" viewBox="0 0 250 250"><path d="m143 39.5c-18 0-18 18-18 18s0-18-18-18H22c-2.76.0-5 2.24-5 5v143c0 2.76 2.24 5 5 5h76c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h76c2.76.0 5-2.24 5-5V44.5c0-2.76-2.24-5-5-5h-85zM206 163c0 1.38-1.12 2.5-2.5 2.5H143c-18 0-18 18-18 18s0-18-18-18H46.5c-1.38.0-2.5-1.12-2.5-2.5V69c0-1.38 1.12-2.5 2.5-2.5H98c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h51.5c1.38.0 2.5 1.12 2.5 2.5v94z" style="fill:#06f"/></svg></a></div><div class=sidebar-content style="height:calc(100% - 131px)"><ul class=sidebar-menu><li class="sidebar-dropdown no-icon current active"><button class=btn>
+Services Overview</button><div class="sidebar-submenu d-block"><ul><li class="sidebar-dropdown nested no-icon current active"><button class=btn>
+☁️ DevOps & Infrastructure</button><div class="sidebar-submenu d-block"><ul><li class="sidebar-dropdown nested no-icon current active"><button class=btn>
+ci-cd-service</button><div class="sidebar-submenu d-block"><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+infrastructure-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🇧🇷 Compliance Services</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+bacen-integration-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+lgpd-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+susep-compliance-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🎨 Frontend Applications</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+admin-portal</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+landingpage-site</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+mobile-app</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🏭 Industrial Connectivity</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+arduino-integration-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+profibus-integration-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+profinet-adapter-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+📊 Data Services</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+analytics-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+datomic-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🔐 Security Services</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+biometric-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+fraud-detection-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+security-guardian-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🔗 Integration Services</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+api-gateway-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+service-mesh-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🚗 Automotive Integration</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+transport-management-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+vehicle-compliance-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+🤖 AI & Machine Learning</button><div class=sidebar-submenu><ul><li class="sidebar-dropdown nested no-icon"><button class=btn>
+ai-decision-layer-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+cortex-ai-service</button><div class=sidebar-submenu><ul></ul></div></li><li class="sidebar-dropdown nested no-icon"><button class=btn>
+deepseek-ollama-service</button><div class=sidebar-submenu><ul></ul></div></li></ul></div></li></ul></div></li></ul></div><ul class="sidebar-footer list-unstyled mb-0"></ul></nav><main class="page-content bg-transparent"><div id=top-header class="top-header d-print-none"><div class="header-bar d-flex justify-content-between"><div class="d-flex align-items-center"><a href=/docs-site/ class="logo-icon me-3" aria-label=HomePage alt=HomePage><div class=small><svg id="Layer_1" viewBox="0 0 250 250"><path d="m143 39.5c-18 0-18 18-18 18s0-18-18-18H22c-2.76.0-5 2.24-5 5v143c0 2.76 2.24 5 5 5h76c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h76c2.76.0 5-2.24 5-5V44.5c0-2.76-2.24-5-5-5h-85zM206 163c0 1.38-1.12 2.5-2.5 2.5H143c-18 0-18 18-18 18s0-18-18-18H46.5c-1.38.0-2.5-1.12-2.5-2.5V69c0-1.38 1.12-2.5 2.5-2.5H98c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h51.5c1.38.0 2.5 1.12 2.5 2.5v94z" style="fill:#06f"/></svg></div><div class=big><svg id="Layer_1" viewBox="0 0 250 250"><path d="m143 39.5c-18 0-18 18-18 18s0-18-18-18H22c-2.76.0-5 2.24-5 5v143c0 2.76 2.24 5 5 5h76c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h76c2.76.0 5-2.24 5-5V44.5c0-2.76-2.24-5-5-5h-85zM206 163c0 1.38-1.12 2.5-2.5 2.5H143c-18 0-18 18-18 18s0-18-18-18H46.5c-1.38.0-2.5-1.12-2.5-2.5V69c0-1.38 1.12-2.5 2.5-2.5H98c7.2.0 8.64 11.52 8.93 16.13.07 1.05.95 1.87 2 1.87h32.14c1.06.0 1.94-.82 2-1.87.29-4.61 1.73-16.13 8.93-16.13h51.5c1.38.0 2.5 1.12 2.5 2.5v94z" style="fill:#06f"/></svg></div></a><button id=close-sidebar class="btn btn-icon btn-soft">
+<span class="material-icons size-20 menu-icon align-middle">menu</span>
+</button>
+<button id=flexsearch-button class="ms-3 btn btn-soft" data-bs-toggle=collapse data-bs-target=#FlexSearchCollapse aria-expanded=false aria-controls=FlexSearchCollapse>
+<span class="material-icons size-20 menu-icon align-middle">search</span>
+<span class="flexsearch-button-placeholder ms-1 me-2 d-none d-sm-block"></span><div class="d-none d-sm-block"><span class=flexsearch-button-keys><kbd class=flexsearch-button-cmd-key><svg width="44" height="15"><path d="M2.118 11.5A1.519 1.519.0 011 11.042 1.583 1.583.0 011 8.815a1.519 1.519.0 011.113-.458h.715V6.643h-.71A1.519 1.519.0 011 6.185 1.519 1.519.0 01.547 5.071 1.519 1.519.0 011 3.958 1.519 1.519.0 012.118 3.5a1.519 1.519.0 011.114.458A1.519 1.519.0 013.69 5.071v.715H5.4V5.071A1.564 1.564.0 016.976 3.5 1.564 1.564.0 018.547 5.071 1.564 1.564.0 016.976 6.643H6.261V8.357h.715a1.575 1.575.0 011.113 2.685 1.583 1.583.0 01-2.227.0A1.519 1.519.0 015.4 9.929V9.214H3.69v.715a1.519 1.519.0 01-.458 1.113A1.519 1.519.0 012.118 11.5zm0-.857a.714.714.0 00.715-.714V9.214H2.118a.715.715.0 100 1.429zm4.858.0a.715.715.0 100-1.429H6.261v.715a.714.714.0 00.715.714zM3.69 8.357H5.4V6.643H3.69zM2.118 5.786h.715V5.071a.714.714.0 00-.715-.714.715.715.0 00-.5 1.22A.686.686.0 002.118 5.786zm4.143.0h.715a.715.715.0 00.5-1.22.715.715.0 00-1.22.5z" fill="currentColor"/><path d="M12.4 11.475H11.344l3.879-7.95h1.056z" fill="currentColor"/><path d="M25.073 5.384l-.864.576a2.121 2.121.0 00-1.786-.923 2.207 2.207.0 00-2.266 2.326 2.206 2.206.0 002.266 2.325 2.1 2.1.0 001.782-.918l.84.617a3.108 3.108.0 01-2.622 1.293 3.217 3.217.0 01-3.349-3.317 3.217 3.217.0 013.349-3.317A3.046 3.046.0 0125.073 5.384z" fill="currentColor"/><path d="M30.993 5.142h-2.07v5.419H27.891V5.142h-2.07V4.164h5.172z" fill="currentColor"/><path d="M34.67 4.164c1.471.0 2.266.658 2.266 1.851.0 1.087-.832 1.809-2.134 1.855l2.107 2.691h-1.28L33.591 7.87H33.07v2.691H32.038v-6.4zm-1.6.969v1.8h1.572c.832.0 1.22-.3 1.22-.918s-.411-.882-1.22-.882z" fill="currentColor"/><path d="M42.883 10.561H38.31v-6.4h1.033V9.583h3.54z" fill="currentColor"/></svg>
+</kbd><kbd class=flexsearch-button-key><svg width="15" height="15"><path d="M5.926 12.279H4.41L9.073 2.721H10.59z" fill="currentColor"/></svg></kbd></span></div></button></div><div class="d-flex align-items-center"><ul class="list-unstyled mb-0"></ul><div class=dropdown><button class="btn btn-link btn-default dropdown-toggle ps-2" type=button data-bs-toggle=dropdown aria-expanded=false>
+PT-BR</button><ul class="dropdown-menu text-end"><li><a class=dropdown-item href=/docs-site/en/docs role=button rel=alternate hreflang=en lang=en>English</a></li><li><a class=dropdown-item href=/docs-site/es/docs role=button rel=alternate hreflang=es lang=es>Español</a></li></ul></div></div></div><div class=collapse id=FlexSearchCollapse><div class=flexsearch-container><div class=flexsearch-keymap><li><kbd class=flexsearch-button-cmd-key><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8m3-3-3 3-3-3"/></g></svg></kbd>
+<kbd class=flexsearch-button-cmd-key><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8m3 3-3-3-3 3"/></g></svg></kbd>
+<span class=flexsearch-key-label>to navigate</span></li><li><kbd class=flexsearch-button-cmd-key><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4m3 3-3-3 3-3"/></g></svg></kbd>
+<span class=flexsearch-key-label>to select</span></li><li><kbd class=flexsearch-button-cmd-key><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993.0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016s1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5s-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864.0 1.6425 1.031 1.5443 2.2492h-2.956"/></g></svg></kbd>
+<span class=flexsearch-key-label>to close</span></li></div><form class="flexsearch position-relative flex-grow-1 ms-2 me-2"><div class="d-flex flex-row"><input id=flexsearch class=form-control type=search placeholder aria-label autocomplete=off>
+<button id=hideFlexsearch type=button class="ms-2 btn btn-soft">
+cancel</button></div><div id=suggestions class="shadow rounded-1 d-none"></div></form></div></div></div><div class=container-fluid><div class=layout-spacing><div class="d-md-flex justify-content-between align-items-center"><nav aria-label=breadcrumb class="d-inline-block pb-2 mt-1 mt-sm-0"><ul id=breadcrumbs class="breadcrumb bg-transparent mb-0" itemscope itemtype=https://schema.org/BreadcrumbList><li class="breadcrumb-item text-capitalize active" aria-current=page itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemprop=item href=/docs-site/docs/><i class="material-icons size-20 align-text-bottom" itemprop=name>Home</i>
+</a><meta itemprop=position content='1'></li><li class="breadcrumb-item text-capitalize" itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemprop=item href=/docs-site/docs/services/><span itemprop=name>Services Overview</span>
+</a><meta itemprop=position content='2'></li><li class="breadcrumb-item text-capitalize" itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemprop=item href=/docs-site/docs/services/devops/><span itemprop=name>☁️ DevOps & Infrastructure</span>
+</a><meta itemprop=position content='3'></li><li class="breadcrumb-item text-capitalize active" itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>ci-cd-service</span>
+<meta itemprop=position content='4'></li></ul></nav></div><div class="row flex-xl-nowrap"><div class="docs-toc col-xl-3 visually-hidden d-xl-block"><toc><div class="fw-bold text-uppercase mb-2">On this page</div><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#features>Features</a></li><li><a href=#documentation>Documentation</a></li><li><a href=#repository>Repository</a></li></ul></nav></toc></div><div class="docs-toc-mobile visually-hidden d-print-none d-xl-none"><button id=toc-dropdown-btn class="btn-secondary dropdown-toggle" type=button data-bs-toggle=dropdown data-bs-offset=0,0 aria-expanded=false>
+Table of Contents</button><nav id=toc-mobile><ul class=dropdown-menu><li><a href=#overview>Overview</a></li><li><a href=#features>Features</a></li><li><a href=#documentation>Documentation</a></li><li><a href=#repository>Repository</a></li></ul></nav></div><div class="docs-content col-12 mt-0"><div class="mb-0 d-flex"><h1 class="content-title mb-0">ci-cd-service</h1></div><div id=content class=main-content><div class="row flex-xl-wrap"></div></div><div><hr class=doc-hr><div id=doc-nav class=d-print-none></div></div></div></div></div></div><footer class="shadow py-3 d-print-none"><div class=container-fluid><div class="row align-items-center"><div class=col><div class="text-sm-start text-center mx-md-2"><p class=mb-0></p></div></div></div></div></footer></main></div></div><button onclick=topFunction() id=back-to-top aria-label="Back to Top Button" class="back-to-top fs-5"><svg width="24" height="24"><path d="M12 10.224l-6.3 6.3-1.38-1.372L12 7.472l7.68 7.68-1.38 1.376z" style="fill:#fff"/></svg></button>
+<script src=/docs-site/docs/js/bootstrap.60a3a948293151c9118847860ab17f6578ddc3c25f63b40d1804fbeab5f07888302d1187d708ff8fd935be3e032fd6fb.js integrity=sha384-YKOpSCkxUckRiEeGCrF/ZXjdw8JfY7QNGAT76rXweIgwLRGH1wj/j9k1vj4DL9b7 defer></script><script type=text/javascript src=https://illunare-40.github.io/docs-site/docs/js/bundle.min.a046e72674401a45bf99217648934a99ff03a7c46d105e47916156e66969388a0643f55a1e850acb495c9bd8be985171.js integrity=sha384-oEbnJnRAGkW/mSF2SJNKmf8Dp8RtEF5HkWFW5mlpOIoGQ/VaHoUKy0lcm9i+mFFx crossorigin=anonymous defer></script><script type=module>
+    var suggestions = document.getElementById('suggestions');
+    var search = document.getElementById('flexsearch');
+
+    const flexsearchContainer = document.getElementById('FlexSearchCollapse');
+
+    const hideFlexsearchBtn = document.getElementById('hideFlexsearch');
+
+    const configObject = { toggle: false }
+    const flexsearchContainerCollapse = new Collapse(flexsearchContainer, configObject) 
+
+    if (search !== null) {
+        document.addEventListener('keydown', inputFocus);
+        flexsearchContainer.addEventListener('shown.bs.collapse', function () {
+            search.focus();
+        });
+        
+        var topHeader = document.getElementById("top-header");
+        document.addEventListener('click', function(elem) {
+            if (!flexsearchContainer.contains(elem.target) && !topHeader.contains(elem.target))
+                flexsearchContainerCollapse.hide();
+        });
+    }
+
+    hideFlexsearchBtn.addEventListener('click', () =>{
+        flexsearchContainerCollapse.hide()
+    })
+
+    function inputFocus(e) {
+        if (e.ctrlKey && e.key === '/') {
+            e.preventDefault();
+            flexsearchContainerCollapse.toggle();
+        }
+        if (e.key === 'Escape' ) {
+            search.blur();
+            
+            flexsearchContainerCollapse.hide();
+        }
+    };
+
+    document.addEventListener('click', function(event) {
+
+    var isClickInsideElement = suggestions.contains(event.target);
+
+    if (!isClickInsideElement) {
+        suggestions.classList.add('d-none');
+    }
+
+    });
+
+    
+
+
+    document.addEventListener('keydown',suggestionFocus);
+
+    function suggestionFocus(e) {
+    const suggestionsHidden = suggestions.classList.contains('d-none');
+    if (suggestionsHidden) return;
+
+    const focusableSuggestions= [...suggestions.querySelectorAll('a')];
+    if (focusableSuggestions.length === 0) return;
+
+    const index = focusableSuggestions.indexOf(document.activeElement);
+
+    if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const nextIndex = index > 0 ? index - 1 : 0;
+        focusableSuggestions[nextIndex].focus();
+    }
+    else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIndex= index + 1 < focusableSuggestions.length ? index + 1 : index;
+        focusableSuggestions[nextIndex].focus();
+    }
+
+    }
+
+    
+
+
+    (function(){
+
+    var index = new FlexSearch.Document({
+        
+        tokenize: "forward",
+        minlength:  0 ,
+        cache:  100 ,
+        optimize:  true ,
+        document: {
+        id: 'id',
+        store: [
+            "href", "title", "description"
+        ],
+        index: ["title", "description", "content"]
+        }
+    });
+
+
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+
+    
+
+    index.add(
+            {
+                id:  0 ,
+                href: "\/docs-site\/docs\/services\/",
+                title: "Services Overview",
+                description: "Complete overview of all illunare 4.0 platform services",
+                content: "🔧 illunare 4.0 Platform Services linkThis is the comprehensive index of all microservices and components in the illunare 4.0 Enterprise Platform.\n📊 Total Services: 23\nService Categories link🎨 Frontend Applications linkUser interfaces, admin panels, and mobile applications\n🤖 AI \u0026 Machine Learning linkArtificial intelligence, machine learning models, and inference engines\n🔐 Security Services linkAuthentication, authorization, biometrics, and security monitoring\n📊 Data Services linkData processing, storage, analytics, and database management\n🏭 Industrial Connectivity linkIndustrial protocols, IoT devices, and automation systems\n🚗 Automotive Integration linkVehicle systems, transportation management, and automotive protocols\n🇧🇷 Compliance Services linkBrazilian regulations, LGPD, BACEN, and governmental integrations\n🔗 Integration Services linkAPI gateways, service meshes, and system integrations\n☁️ DevOps \u0026 Infrastructure linkCI/CD pipelines, infrastructure management, and deployment automation\nAll services are automatically documented and updated as part of the illunare 4.0 platform.\n"
+            }
+        );
+    index.add(
+            {
+                id:  1 ,
+                href: "\/docs-site\/docs\/",
+                title: "Documentation Hub",
+                description: "Comprehensive documentation for the illunare 4.0 Enterprise Platform",
+                content: "📖 illunare 4.0 Documentation Hub link info Welcome to the **comprehensive documentation** for the illunare 4.0 Enterprise Platform. This hub provides organized access to all technical documentation, guides, tutorials, and references. 🚀 Quick Navigation linkFor Developers link 🔧 API Reference - Complete API documentation 🏗️ Architecture Guide - System design and patterns 💻 SDK \u0026 Libraries - Development tools and libraries For DevOps Engineers link ☁️ Infrastructure Setup - Cloud deployment guides 🔄 CI/CD Pipelines - Automation workflows 📊 Monitoring \u0026 Observability - Platform monitoring For Business Users link 🚀 Getting Started - Quick start guides 🏭 Industrial Solutions - Industrial connectivity 🇧🇷 Compliance - Brazilian regulations 📚 Documentation Categories link🌟 Core Platform linkPlatform Overview link Introduction to illunare 4.0 Key features and capabilities Technology stack overview Performance metrics and SLAs Roadmap and future plans Explore Platform Overview →\nSystem Architecture link Microservices design patterns Data flow and integration Security architecture Scalability and performance Deployment strategies Explore Architecture →\nCore Services link Frontend applications Backend microservices Integration services Data processing pipelines AI/ML inference engines Browse Services →\n🤖 AI \u0026 Machine Learning linkgraph LR A[🧠 AI Core] --\u003e B[🔍 Decision Layer] A --\u003e C[🛡️ Security Guardian] A --\u003e D[🎯 Cortex AI] A --\u003e E[🦾 DeepSeek \u0026 Ollama] B --\u003e F[Real-time Inference] C --\u003e G[Threat Detection] D --\u003e H[Cognitive Processing] E --\u003e I[Language Models] AI/ML Documentation Sections:\n🧠 AI Decision Layer - Core AI processing 🛡️ Security Guardian - AI-powered security 🎯 Cortex AI Service - Cognitive computing 🦾 DeepSeek \u0026 Ollama - Language models 🏗️ ML Infrastructure - Training and deployment 🔐 Security \u0026 Compliance link Security Layer Technology Compliance Authentication Zero-Trust + Biometrics LGPD, BACEN Encryption Post-Quantum Crypto SUSEP, FENSEG Network mTLS + Istio ISO 27001 Data End-to-End Encryption SOC 2 Type II Identity RBAC + ABAC GDPR Ready Security Documentation:\n🔐 Zero-Trust Architecture - Security model 🔏 Biometric Verification - Identity systems 🛡️ Post-Quantum Cryptography - Future-proof security 🚨 Anti-Abuse Protection - Threat prevention 🏭 Industrial Connectivity link check_circle **Industry 4.0 Ready** - Connect with industrial equipment using modern protocols and legacy system adapters. Supported Protocols link 🔌 Industrial Protocols Profibus DP/PA Profinet RT/IRT Modbus TCP/RTU OPC-UA EtherCAT DeviceNet 🖥️ Computing Platforms Arduino (Uno, Mega, ESP32) Raspberry Pi (3B+, 4, 5) Industrial PCs Edge Computing Devices SCADA Systems HMI Interfaces Industrial Documentation:\n🏭 Profibus Integration - Legacy system connection 🌐 Profinet RJ45 Adapters - Modern Ethernet 🔧 Arduino Libraries - IoT device integration 🍓 Raspberry Pi Support - Edge computing 🚗 Automotive Integration linkgraph TB A[🚗 Automotive Platform] --\u003e B[🔧 Vehicle Systems] A --\u003e C[📡 Communication] A --\u003e D[📋 Compliance] A --\u003e E[🚛 Fleet Management] B --\u003e B1[Engine Control] B --\u003e B2[Safety Systems] B --\u003e B3[Infotainment] C --\u003e C1[CAN Bus] C --\u003e C2[LIN Networks] C --\u003e C3[FlexRay] D --\u003e D1[ECE Regulations] D --\u003e D2[UNECE Standards] D --\u003e D3[Local Compliance] E --\u003e E1[Logistics] E --\u003e E2[Tracking] E --\u003e E3[Maintenance] Automotive Documentation:\n🚗 Vehicle Compliance - Regulatory standards 🚛 Transportation Management - Fleet operations 🔌 Integration Patterns - System connectivity 📦 Supply Chain - Logistics automation 🇧🇷 Brazilian Compliance \u0026 LATAM link brazilian_compliance: data_protection: - LGPD: \"Lei Geral de Proteção de Dados\" - privacy_by_design: true - consent_management: automated financial_regulations: - BACEN: \"Banco Central do Brasil\" - SUSEP: \"Superintendência de Seguros Privados\" - pix_integration: supported tax_compliance: - e_social: integrated - nfe: \"Nota Fiscal Eletrônica\" - cte: \"Conhecimento de Transporte\" - mdfe: \"Manifesto Eletrônico\" industry_standards: - fenseg: \"Federação Nacional de Seguros\" - anbima: supported - febraban: integrated Compliance Documentation:\n🇧🇷 LGPD Implementation - Data protection compliance 🏦 FenSeg Integration - Insurance federation 🛡️ SUSEP Compliance - Insurance regulations 👥 E-Social Bridge - Employment social security 💰 Tax Calculation LATAM - Multi-country taxation 🛠️ Development Resources link📡 API Reference linkREST APIs link OpenAPI 3.0 specifications Interactive documentation Authentication methods Rate limiting policies Error handling guides REST API Docs →\nGraphQL link Schema definitions Query examples Mutation operations Subscription real-time updates Federation patterns GraphQL Docs →\ngRPC Services link Protocol buffer definitions Service interfaces Streaming operations Load balancing Circuit breakers gRPC Docs →\nWebSocket APIs link Real-time communication Event streaming Connection management Message formatting Error handling WebSocket Docs →\n💻 SDK \u0026 Libraries link Language Package Version Status Go github.com/illunare-40/go-sdk v4.0.0 ✅ Stable Rust illunare-sdk v4.0.0 ✅ Stable Elixir illunare v4.0.0 ✅ Stable TypeScript @illunare/sdk v4.0.0 ✅ Stable Python illunare-sdk v4.0.0 ✅ Stable Java com.illunare:sdk v4.0.0 ✅ Stable 📊 Monitoring \u0026 Observability link📈 Platform Metrics linkgraph LR A[📊 Metrics] --\u003e B[🔍 Traces] A --\u003e C[📝 Logs] A --\u003e D[🚨 Alerts] B --\u003e E[OpenTelemetry] C --\u003e F[Structured Logging] D --\u003e G[SLO-based Alerting] E --\u003e H[Jaeger] F --\u003e I[Loki] G --\u003e J[Prometheus] Observability Stack:\nMetrics: Prometheus + Grafana Tracing: OpenTelemetry + Jaeger Logging: Loki + Grafana Alerting: AlertManager + PagerDuty Dashboards: Custom Grafana dashboards 🎯 SLO Targets link Service Category Availability Latency P95 Error Rate Core APIs 99.99% \u003c100ms \u003c0.1% AI/ML Services 99.9% \u003c200ms \u003c0.5% Data Services 99.95% \u003c50ms \u003c0.2% Frontend Apps 99.9% \u003c500ms \u003c1% 🔄 Documentation Updates \u0026 Automation link warning **Automated Updates** - This documentation is automatically updated every 30 minutes with the latest information from all repositories. 📝 Content Management Workflow linksequenceDiagram participant Dev as Developer participant Repo as Service Repository participant CI as Documentation CI participant Hugo as Hugo Build participant Site as Documentation Site Dev-\u003e\u003eRepo: Update Documentation Repo-\u003e\u003eCI: Trigger Webhook CI-\u003e\u003eCI: Aggregate Content CI-\u003e\u003eHugo: Build Site Hugo-\u003e\u003eSite: Deploy Updates Site-\u003e\u003eDev: Live Documentation 🤖 Automation Features link ✅ Auto-discovery of service repositories ✅ Content aggregation from multiple sources ✅ Markdown processing with Hugo ✅ Link validation and checking ✅ Image optimization and compression ✅ Search indexing with FlexSearch ✅ Multi-language support (pt-BR, en, es) 🎓 Learning Paths link👨‍💻 For New Developers link Start Here: Platform Overview Setup: Development Environment First API: Hello World Tutorial Advanced: Microservices Development 🏗️ For Architects link Architecture: System Design Patterns: Integration Patterns Security: Zero-Trust Model Scale: Performance Optimization ☁️ For DevOps link Infrastructure: Cloud Setup Deployment: CI/CD Pipelines Monitoring: Observability Operations: Production Management 📞 Support \u0026 Feedback link info Need help or have feedback about the documentation? We're here to help! 🤝 Getting Help link 📧 Documentation Issues: docs@illunare.com 💬 Community Chat: Discord Server 🐙 GitHub Issues: Report Documentation Bug 📝 Edit This Page: Use the “Edit” button on any page 📈 Documentation Metrics link Total Pages: 200+ comprehensive guides Update Frequency: Every 30 minutes Languages: Portuguese (BR), English, Spanish Contributors: 25+ active contributors Coverage: 95% of platform features documented check_circle **Ready to dive deeper?** Choose your path from the categories above or use the search function to find specific information. The illunare 4.0 platform is designed to empower your enterprise with cutting-edge technology and comprehensive documentation to support your journey. "
+            }
+        );
+    index.add(
+            {
+                id:  2 ,
+                href: "\/docs-site\/docs\/services\/devops\/",
+                title: "☁️ DevOps \u0026 Infrastructure",
+                description: "Services in the devops category",
+                content: "☁️ DevOps \u0026 Infrastructure linkThis section contains all services related to devops in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on devops functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  3 ,
+                href: "\/docs-site\/docs\/services\/compliance\/",
+                title: "🇧🇷 Compliance Services",
+                description: "Services in the compliance category",
+                content: "🇧🇷 Compliance Services linkThis section contains all services related to compliance in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on compliance functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  4 ,
+                href: "\/docs-site\/docs\/services\/frontend\/",
+                title: "🎨 Frontend Applications",
+                description: "Services in the frontend category",
+                content: "🎨 Frontend Applications linkThis section contains all services related to frontend in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on frontend functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  5 ,
+                href: "\/docs-site\/docs\/services\/industrial\/",
+                title: "🏭 Industrial Connectivity",
+                description: "Services in the industrial category",
+                content: "🏭 Industrial Connectivity linkThis section contains all services related to industrial in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on industrial functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  6 ,
+                href: "\/docs-site\/docs\/services\/data\/",
+                title: "📊 Data Services",
+                description: "Services in the data category",
+                content: "📊 Data Services linkThis section contains all services related to data in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on data functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  7 ,
+                href: "\/docs-site\/docs\/services\/security\/",
+                title: "🔐 Security Services",
+                description: "Services in the security category",
+                content: "🔐 Security Services linkThis section contains all services related to security in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on security functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  8 ,
+                href: "\/docs-site\/docs\/services\/integration\/",
+                title: "🔗 Integration Services",
+                description: "Services in the integration category",
+                content: "🔗 Integration Services linkThis section contains all services related to integration in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on integration functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  9 ,
+                href: "\/docs-site\/docs\/services\/automotive\/",
+                title: "🚗 Automotive Integration",
+                description: "Services in the automotive category",
+                content: "🚗 Automotive Integration linkThis section contains all services related to automotive in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on automotive functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  10 ,
+                href: "\/docs-site\/docs\/services\/ai-ml\/",
+                title: "🤖 AI \u0026 Machine Learning",
+                description: "Services in the ai-ml category",
+                content: "🤖 AI \u0026 Machine Learning linkThis section contains all services related to ai-ml in the illunare 4.0 platform.\nServices in this category linkServices in this category focus on ai-ml functionality and integration.\n"
+            }
+        );
+    index.add(
+            {
+                id:  11 ,
+                href: "\/docs-site\/docs\/services\/frontend\/admin-portal\/",
+                title: "admin-portal",
+                description: "TypeScript frontend application for administration",
+                content: "admin-portal linkCategory: frontend\nDescription: TypeScript frontend application for administration\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s frontend category.\nFeatures link Core functionality for admin-portal Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: admin-portal Category: frontend Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  12 ,
+                href: "\/docs-site\/docs\/services\/ai-ml\/ai-decision-layer-service\/",
+                title: "ai-decision-layer-service",
+                description: "Core AI decision making service",
+                content: "ai-decision-layer-service linkCategory: ai-ml\nDescription: Core AI decision making service\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s ai-ml category.\nFeatures link Core functionality for ai-decision-layer-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: ai-decision-layer-service Category: ai-ml Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  13 ,
+                href: "\/docs-site\/docs\/services\/data\/analytics-service\/",
+                title: "analytics-service",
+                description: "Real-time data analytics and processing",
+                content: "analytics-service linkCategory: data\nDescription: Real-time data analytics and processing\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s data category.\nFeatures link Core functionality for analytics-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: analytics-service Category: data Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  14 ,
+                href: "\/docs-site\/docs\/services\/integration\/api-gateway-service\/",
+                title: "api-gateway-service",
+                description: "Centralized API gateway and routing",
+                content: "api-gateway-service linkCategory: integration\nDescription: Centralized API gateway and routing\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s integration category.\nFeatures link Core functionality for api-gateway-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: api-gateway-service Category: integration Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  15 ,
+                href: "\/docs-site\/docs\/services\/industrial\/arduino-integration-service\/",
+                title: "arduino-integration-service",
+                description: "Arduino and IoT device connectivity",
+                content: "arduino-integration-service linkCategory: industrial\nDescription: Arduino and IoT device connectivity\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s industrial category.\nFeatures link Core functionality for arduino-integration-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: arduino-integration-service Category: industrial Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  16 ,
+                href: "\/docs-site\/docs\/services\/compliance\/bacen-integration-service\/",
+                title: "bacen-integration-service",
+                description: "Central Bank of Brazil integration",
+                content: "bacen-integration-service linkCategory: compliance\nDescription: Central Bank of Brazil integration\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s compliance category.\nFeatures link Core functionality for bacen-integration-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: bacen-integration-service Category: compliance Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  17 ,
+                href: "\/docs-site\/docs\/services\/security\/biometric-service\/",
+                title: "biometric-service",
+                description: "Biometric authentication and verification",
+                content: "biometric-service linkCategory: security\nDescription: Biometric authentication and verification\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s security category.\nFeatures link Core functionality for biometric-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: biometric-service Category: security Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  18 ,
+                href: "\/docs-site\/docs\/services\/devops\/ci-cd-service\/",
+                title: "ci-cd-service",
+                description: "Continuous integration and deployment",
+                content: "ci-cd-service linkCategory: devops\nDescription: Continuous integration and deployment\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s devops category.\nFeatures link Core functionality for ci-cd-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: ci-cd-service Category: devops Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  19 ,
+                href: "\/docs-site\/docs\/services\/ai-ml\/cortex-ai-service\/",
+                title: "cortex-ai-service",
+                description: "Cognitive computing and reasoning service",
+                content: "cortex-ai-service linkCategory: ai-ml\nDescription: Cognitive computing and reasoning service\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s ai-ml category.\nFeatures link Core functionality for cortex-ai-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: cortex-ai-service Category: ai-ml Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  20 ,
+                href: "\/docs-site\/docs\/services\/data\/datomic-service\/",
+                title: "datomic-service",
+                description: "Immutable database management",
+                content: "datomic-service linkCategory: data\nDescription: Immutable database management\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s data category.\nFeatures link Core functionality for datomic-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: datomic-service Category: data Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  21 ,
+                href: "\/docs-site\/docs\/services\/ai-ml\/deepseek-ollama-service\/",
+                title: "deepseek-ollama-service",
+                description: "Large language model integration service",
+                content: "deepseek-ollama-service linkCategory: ai-ml\nDescription: Large language model integration service\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s ai-ml category.\nFeatures link Core functionality for deepseek-ollama-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: deepseek-ollama-service Category: ai-ml Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  22 ,
+                href: "\/docs-site\/docs\/services\/security\/fraud-detection-service\/",
+                title: "fraud-detection-service",
+                description: "AI-powered fraud detection and prevention",
+                content: "fraud-detection-service linkCategory: security\nDescription: AI-powered fraud detection and prevention\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s security category.\nFeatures link Core functionality for fraud-detection-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: fraud-detection-service Category: security Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  23 ,
+                href: "\/docs-site\/docs\/services\/devops\/infrastructure-service\/",
+                title: "infrastructure-service",
+                description: "Infrastructure as code management",
+                content: "infrastructure-service linkCategory: devops\nDescription: Infrastructure as code management\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s devops category.\nFeatures link Core functionality for infrastructure-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: infrastructure-service Category: devops Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  24 ,
+                href: "\/docs-site\/docs\/services\/frontend\/landingpage-site\/",
+                title: "landingpage-site",
+                description: "Hugo-based marketing and landing pages",
+                content: "landingpage-site linkCategory: frontend\nDescription: Hugo-based marketing and landing pages\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s frontend category.\nFeatures link Core functionality for landingpage-site Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: landingpage-site Category: frontend Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  25 ,
+                href: "\/docs-site\/docs\/services\/compliance\/lgpd-service\/",
+                title: "lgpd-service",
+                description: "Brazilian LGPD compliance management",
+                content: "lgpd-service linkCategory: compliance\nDescription: Brazilian LGPD compliance management\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s compliance category.\nFeatures link Core functionality for lgpd-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: lgpd-service Category: compliance Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  26 ,
+                href: "\/docs-site\/docs\/services\/frontend\/mobile-app\/",
+                title: "mobile-app",
+                description: "Flutter mobile application for iOS and Android",
+                content: "mobile-app linkCategory: frontend\nDescription: Flutter mobile application for iOS and Android\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s frontend category.\nFeatures link Core functionality for mobile-app Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: mobile-app Category: frontend Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  27 ,
+                href: "\/docs-site\/docs\/services\/industrial\/profibus-integration-service\/",
+                title: "profibus-integration-service",
+                description: "Profibus protocol integration",
+                content: "profibus-integration-service linkCategory: industrial\nDescription: Profibus protocol integration\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s industrial category.\nFeatures link Core functionality for profibus-integration-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: profibus-integration-service Category: industrial Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  28 ,
+                href: "\/docs-site\/docs\/services\/industrial\/profinet-adapter-service\/",
+                title: "profinet-adapter-service",
+                description: "Profinet communication adapter",
+                content: "profinet-adapter-service linkCategory: industrial\nDescription: Profinet communication adapter\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s industrial category.\nFeatures link Core functionality for profinet-adapter-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: profinet-adapter-service Category: industrial Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  29 ,
+                href: "\/docs-site\/docs\/services\/security\/security-guardian-service\/",
+                title: "security-guardian-service",
+                description: "Real-time security monitoring and threat detection",
+                content: "security-guardian-service linkCategory: security\nDescription: Real-time security monitoring and threat detection\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s security category.\nFeatures link Core functionality for security-guardian-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: security-guardian-service Category: security Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  30 ,
+                href: "\/docs-site\/docs\/services\/integration\/service-mesh-service\/",
+                title: "service-mesh-service",
+                description: "Service-to-service communication",
+                content: "service-mesh-service linkCategory: integration\nDescription: Service-to-service communication\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s integration category.\nFeatures link Core functionality for service-mesh-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: service-mesh-service Category: integration Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  31 ,
+                href: "\/docs-site\/docs\/services\/compliance\/susep-compliance-service\/",
+                title: "susep-compliance-service",
+                description: "Insurance regulation compliance",
+                content: "susep-compliance-service linkCategory: compliance\nDescription: Insurance regulation compliance\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s compliance category.\nFeatures link Core functionality for susep-compliance-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: susep-compliance-service Category: compliance Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  32 ,
+                href: "\/docs-site\/docs\/services\/automotive\/transport-management-service\/",
+                title: "transport-management-service",
+                description: "Fleet and logistics management",
+                content: "transport-management-service linkCategory: automotive\nDescription: Fleet and logistics management\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s automotive category.\nFeatures link Core functionality for transport-management-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: transport-management-service Category: automotive Status: Active Development "
+            }
+        );
+    index.add(
+            {
+                id:  33 ,
+                href: "\/docs-site\/docs\/services\/automotive\/vehicle-compliance-service\/",
+                title: "vehicle-compliance-service",
+                description: "Automotive regulatory compliance",
+                content: "vehicle-compliance-service linkCategory: automotive\nDescription: Automotive regulatory compliance\nLast Updated: 2025-05-31\nOverview linkThis service is part of the illunare 4.0 Enterprise Platform’s automotive category.\nFeatures link Core functionality for vehicle-compliance-service Integration with illunare 4.0 platform Enterprise-grade security and compliance High-performance and scalable architecture Documentation linkDetailed documentation will be automatically aggregated from the service repository.\nRepository link Repository: vehicle-compliance-service Category: automotive Status: Active Development "
+            }
+        );
+    search.addEventListener('input', show_results, true);
+
+    function show_results(){
+        const maxResult =  5 ;
+        const minlength =  0 ;
+        var searchQuery = sanitizeHTML(this.value);
+        var results = index.search(searchQuery, {limit: maxResult, enrich: true});
+
+        
+        const flatResults = new Map(); 
+        for (const result of results.flatMap(r => r.result)) {
+        if (flatResults.has(result.doc.href)) continue;
+        flatResults.set(result.doc.href, result.doc);
+        }
+
+        suggestions.innerHTML = "";
+        suggestions.classList.remove('d-none');
+
+        
+        if (searchQuery.length < minlength) {
+            const minCharMessage = document.createElement('div')
+            minCharMessage.innerHTML = `Please type at least <strong>${minlength}</strong> characters`
+            minCharMessage.classList.add("suggestion__no-results");
+            suggestions.appendChild(minCharMessage);
+            return;
+        } else {
+            
+            if (flatResults.size === 0 && searchQuery) {
+                const noResultsMessage = document.createElement('div')
+                noResultsMessage.innerHTML = "No results for" + ` "<strong>${searchQuery}</strong>"`
+                noResultsMessage.classList.add("suggestion__no-results");
+                suggestions.appendChild(noResultsMessage);
+                return;
+            }
+        }
+
+        
+        for(const [href, doc] of flatResults) {
+            const entry = document.createElement('div');
+            suggestions.appendChild(entry);
+
+            const a = document.createElement('a');
+            a.href = href;
+            entry.appendChild(a);
+
+            const title = document.createElement('span');
+            title.textContent = doc.title;
+            title.classList.add("suggestion__title");
+            a.appendChild(title);
+
+            const description = document.createElement('span');
+            description.textContent = doc.description;
+            description.classList.add("suggestion__description");
+            a.appendChild(description);
+
+            suggestions.appendChild(entry);
+
+            if(suggestions.childElementCount == maxResult) break;
+        }
+    }
+    }());
+</script></body></html>

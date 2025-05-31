@@ -217,5 +217,5 @@ def define_env(env):
         'build_date': datetime.datetime.now().strftime("%Y-%m-%d"),
         'documentation_url': 'https://illunare-40.github.io/docs-site/',
         'github_org': 'illunare-40',
-        'support_email': 'support@illunare.com'
+        'support_email': 'fale-conosco@illunare.com.br'
     }) 

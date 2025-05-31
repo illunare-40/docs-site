@@ -1,0 +1,754 @@
+name: 🚀 Hugo Documentation Deploy
+
+on:
+  schedule:
+    # Auto-update every 30 minutes
+    - cron: '*/30 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'hugo.toml'
+      - 'scripts/**'
+      - '.github/workflows/hugo-deploy.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'hugo.toml'
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force complete rebuild'
+        required: false
+        default: false
+        type: boolean
+      deploy_environment:
+        description: 'Deployment environment'
+        required: false
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+
+env:
+  HUGO_VERSION: '0.140.0'
+  NODE_VERSION: '18'
+  GO_VERSION: '1.22'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # ==========================================
+  # 1. BUILD PREPARATION
+  # ==========================================
+  prepare:
+    name: 🔧 Build Preparation
+    runs-on: ubuntu-latest
+    outputs:
+      hugo_cache_key: ${{ steps.cache-keys.outputs.hugo_cache_key }}
+      content_hash: ${{ steps.cache-keys.outputs.content_hash }}
+      should_deploy: ${{ steps.deploy-check.outputs.should_deploy }}
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      
+      - name: 🔑 Generate cache keys
+        id: cache-keys
+        run: |
+          echo "hugo_cache_key=hugo-${{ env.HUGO_VERSION }}-${{ runner.os }}" >> $GITHUB_OUTPUT
+          echo "content_hash=${{ hashFiles('content/**', 'hugo.toml', 'scripts/**') }}" >> $GITHUB_OUTPUT
+      
+      - name: ✅ Check deployment conditions
+        id: deploy-check
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "schedule" ]]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+  # ==========================================
+  # 2. CONTENT AGGREGATION
+  # ==========================================
+  content-aggregation:
+    name: 📥 Content Aggregation
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: 📦 Install Python dependencies
+        run: |
+          pip install requests beautifulsoup4 pyyaml
+      
+      - name: 🔍 Discover and aggregate content
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 << 'EOF'
+          import os
+          import json
+          import requests
+          import subprocess
+          import shutil
+          from pathlib import Path
+          import time
+          
+          def discover_repositories():
+              """Discover illunare-40 repositories"""
+              github_token = os.getenv('GITHUB_TOKEN')
+              if not github_token:
+                  print("⚠️ GitHub token not available, using mock data")
+                  return [
+                      {
+                          'name': 'admin-portal',
+                          'clone_url': 'https://github.com/illunare-40/admin-portal.git',
+                          'updated_at': '2025-01-28T00:00:00Z',
+                          'language': 'TypeScript',
+                          'topics': ['frontend', 'admin', 'portal']
+                      },
+                      {
+                          'name': 'mobile-app',
+                          'clone_url': 'https://github.com/illunare-40/mobile-app.git',
+                          'updated_at': '2025-01-28T00:00:00Z',
+                          'language': 'Dart',
+                          'topics': ['mobile', 'flutter', 'app']
+                      },
+                      {
+                          'name': 'ai-decision-layer-service',
+                          'clone_url': 'https://github.com/illunare-40/ai-decision-layer-service.git',
+                          'updated_at': '2025-01-28T00:00:00Z',
+                          'language': 'Go',
+                          'topics': ['ai', 'ml', 'service']
+                      }
+                  ]
+              
+              headers = {'Authorization': f"token {github_token}"}
+              repos = []
+              page = 1
+              
+              while True:
+                  url = f"https://api.github.com/orgs/illunare-40/repos?type=all&sort=updated&per_page=100&page={page}"
+                  response = requests.get(url, headers=headers)
+                  
+                  if response.status_code == 403:  # Rate limit
+                      print("Rate limited, waiting...")
+                      time.sleep(60)
+                      continue
+                      
+                  if response.status_code != 200:
+                      print(f"API error: {response.status_code}")
+                      break
+                      
+                  data = response.json()
+                  if not data:
+                      break
+                      
+                  for repo in data:
+                      if any(keyword in repo['name'] for keyword in ['service', 'portal', 'app', 'admin', 'mobile', 'landingpage']):
+                          repos.append({
+                              'name': repo['name'],
+                              'clone_url': repo['clone_url'],
+                              'updated_at': repo['updated_at'],
+                              'language': repo.get('language', 'Unknown'),
+                              'topics': repo.get('topics', [])
+                          })
+                  
+                  page += 1
+                  if len(data) < 100:
+                      break
+              
+              return repos
+          
+          def categorize_service(repo_name, language, topics):
+              """Enhanced service categorization"""
+              name_lower = repo_name.lower()
+              language_lower = language.lower() if language else ''
+              
+              # Frontend categorization
+              if any(x in name_lower for x in ['admin-portal', 'mobile-app', 'landingpage']):
+                  return 'frontend'
+              elif 'frontend' in topics:
+                  return 'frontend'
+              
+              # AI/ML categorization
+              elif any(x in name_lower for x in ['ai-', 'ml-', 'deepseek', 'ollama', 'cortex']):
+                  return 'ai-ml'
+              elif any(x in topics for x in ['ai', 'ml', 'machine-learning', 'artificial-intelligence']):
+                  return 'ai-ml'
+              
+              # Security categorization
+              elif any(x in name_lower for x in ['security', 'auth', 'biometric', 'fraud']):
+                  return 'security'
+              elif any(x in topics for x in ['security', 'authentication', 'biometric']):
+                  return 'security'
+              
+              # Industrial categorization
+              elif any(x in name_lower for x in ['industrial', 'profibus', 'profinet', 'arduino']):
+                  return 'industrial'
+              elif any(x in topics for x in ['industrial', 'iot', 'profibus', 'profinet']):
+                  return 'industrial'
+              
+              # Automotive categorization
+              elif any(x in name_lower for x in ['automotive', 'vehicle', 'transport']):
+                  return 'automotive'
+              elif any(x in topics for x in ['automotive', 'vehicle', 'transportation']):
+                  return 'automotive'
+              
+              # Compliance categorization
+              elif any(x in name_lower for x in ['compliance', 'lgpd', 'bacen', 'susep']):
+                  return 'compliance'
+              elif any(x in topics for x in ['compliance', 'lgpd', 'brazilian-regulation']):
+                  return 'compliance'
+              
+              # Data services
+              elif any(x in name_lower for x in ['data-', 'database', 'storage', 'datomic']):
+                  return 'data'
+              elif any(x in topics for x in ['database', 'data-processing', 'storage']):
+                  return 'data'
+              
+              # Integration services
+              elif any(x in name_lower for x in ['integration', 'api-', 'gateway']):
+                  return 'integration'
+              elif any(x in topics for x in ['integration', 'api', 'gateway']):
+                  return 'integration'
+              
+              # DevOps
+              elif any(x in name_lower for x in ['devops', 'ci-cd', 'infrastructure']):
+                  return 'devops'
+              elif any(x in topics for x in ['devops', 'ci-cd', 'infrastructure']):
+                  return 'devops'
+              
+              else:
+                  return 'services'
+          
+          def generate_service_index(services_by_category):
+              """Generate comprehensive service index"""
+              content = """---
+          title: "Services Overview"
+          description: "Complete overview of all illunare 4.0 platform services"
+          icon: "settings"
+          weight: 10
+          ---
+          
+          # 🔧 illunare 4.0 Platform Services
+          
+          This is the comprehensive index of all microservices and components in the illunare 4.0 Enterprise Platform.
+          
+          """
+              
+              # Statistics
+              total_services = sum(len(services) for services in services_by_category.values())
+              content += f"📊 **Total Services**: {total_services}\n\n"
+              
+              # Categories with icons and descriptions
+              categories = {
+                  'frontend': {
+                      'title': '🎨 Frontend Applications',
+                      'description': 'User interfaces, admin panels, and mobile applications'
+                  },
+                  'ai-ml': {
+                      'title': '🤖 AI & Machine Learning',
+                      'description': 'Artificial intelligence, machine learning models, and inference engines'
+                  },
+                  'security': {
+                      'title': '🔐 Security Services',
+                      'description': 'Authentication, authorization, biometrics, and security monitoring'
+                  },
+                  'data': {
+                      'title': '📊 Data Services',
+                      'description': 'Data processing, storage, analytics, and database management'
+                  },
+                  'industrial': {
+                      'title': '🏭 Industrial Connectivity',
+                      'description': 'Industrial protocols, IoT devices, and automation systems'
+                  },
+                  'automotive': {
+                      'title': '🚗 Automotive Integration',
+                      'description': 'Vehicle systems, transportation management, and automotive protocols'
+                  },
+                  'compliance': {
+                      'title': '🇧🇷 Compliance Services',
+                      'description': 'Brazilian regulations, LGPD, BACEN, and governmental integrations'
+                  },
+                  'integration': {
+                      'title': '🔗 Integration Services',
+                      'description': 'API gateways, service meshes, and system integrations'
+                  },
+                  'devops': {
+                      'title': '☁️ DevOps & Infrastructure',
+                      'description': 'CI/CD pipelines, infrastructure management, and deployment automation'
+                  },
+                  'services': {
+                      'title': '⚙️ Core Services',
+                      'description': 'Core platform services and utilities'
+                  }
+              }
+              
+              for category, info in categories.items():
+                  if category in services_by_category and services_by_category[category]:
+                      content += f"## {info['title']}\n\n"
+                      content += f"{info['description']}\n\n"
+                      
+                      # Service cards
+                      content += '<div class="row">\n'
+                      
+                      for service in sorted(services_by_category[category], key=lambda x: x['name']):
+                          metadata = service['metadata']
+                          name = service['name']
+                          language = metadata.get('language', 'Unknown')
+                          updated = metadata.get('updated_at', '')
+                          
+                          # Language badge
+                          lang_badges = {
+                              'typescript': '![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)',
+                              'javascript': '![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)',
+                              'go': '![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)',
+                              'rust': '![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)',
+                              'python': '![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)',
+                              'elixir': '![Elixir](https://img.shields.io/badge/Elixir-4B275F?style=flat&logo=elixir&logoColor=white)',
+                              'dart': '![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white)'
+                          }
+                          
+                          lang_badge = lang_badges.get(language.lower(), f'![{language}](https://img.shields.io/badge/{language}-gray?style=flat)')
+                          
+                          content += f'''
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5>{name}</h5>
+                </div>
+                <div class="card-body">
+                  <p>{lang_badge}</p>
+                  <p class="text-muted">Updated: {updated[:10] if updated else "Unknown"}</p>
+                  <a href="/docs/services/{category}/{name}/" class="btn btn-primary btn-sm">View Docs →</a>
+                </div>
+              </div>
+            </div>
+          '''
+                      
+                      content += '</div>\n\n'
+                      content += "---\n\n"
+              
+              return content
+          
+          def main():
+              print("🔍 Starting content aggregation...")
+              
+              # Discover repositories
+              repos = discover_repositories()
+              print(f"Found {len(repos)} repositories")
+              
+              # Create services directory structure
+              services_dir = Path('content/docs/services')
+              services_dir.mkdir(parents=True, exist_ok=True)
+              
+              services_by_category = {}
+              
+              # Categorize and organize services
+              for repo in repos:
+                  category = categorize_service(repo['name'], repo['language'], repo['topics'])
+                  
+                  if category not in services_by_category:
+                      services_by_category[category] = []
+                  
+                  services_by_category[category].append({
+                      'name': repo['name'],
+                      'metadata': repo
+                  })
+                  
+                  # Create category directory and placeholder
+                  category_dir = services_dir / category / repo['name']
+                  category_dir.mkdir(parents=True, exist_ok=True)
+                  
+                  # Create service index file
+                  service_index = category_dir / '_index.md'
+                  if not service_index.exists():
+                      service_content = f"""---
+          title: "{repo['name']}"
+          description: "Documentation for {repo['name']} service"
+          icon: "code"
+          weight: 100
+          date: {repo['updated_at']}
+          categories: ["{category}", "service"]
+          tags: ["{repo['name']}", "{category}", "{repo['language']}"]
+          ---
+          
+          # {repo['name']}
+          
+          **Language**: {repo['language']}  
+          **Category**: {category.title()}  
+          **Last Updated**: {repo['updated_at'][:10] if repo['updated_at'] else 'Unknown'}
+          
+          ## Overview
+          
+          This service is part of the illunare 4.0 Enterprise Platform's {category} category.
+          
+          ## Features
+          
+          - Core functionality for {repo['name']}
+          - Integration with illunare 4.0 platform
+          - Enterprise-grade security and compliance
+          
+          ## Documentation
+          
+          Detailed documentation will be automatically aggregated from the service repository.
+          
+          ## Repository
+          
+          - **Repository**: [{repo['name']}](https://github.com/illunare-40/{repo['name']})
+          - **Topics**: {', '.join(repo['topics']) if repo['topics'] else 'None'}
+          """
+                      service_index.write_text(service_content)
+              
+              # Generate main services index
+              services_index_content = generate_service_index(services_by_category)
+              services_index_file = services_dir / '_index.md'
+              services_index_file.write_text(services_index_content)
+              
+              print(f"✅ Content aggregation completed: {sum(len(services) for services in services_by_category.values())} services processed")
+              
+              # Generate category indices
+              for category, info in {
+                  'frontend': '🎨 Frontend Applications',
+                  'ai-ml': '🤖 AI & Machine Learning',
+                  'security': '🔐 Security Services',
+                  'data': '📊 Data Services',
+                  'industrial': '🏭 Industrial Connectivity',
+                  'automotive': '🚗 Automotive Integration',
+                  'compliance': '🇧🇷 Compliance Services',
+                  'integration': '🔗 Integration Services',
+                  'devops': '☁️ DevOps & Infrastructure',
+                  'services': '⚙️ Core Services'
+              }.items():
+                  if category in services_by_category:
+                      category_dir = services_dir / category
+                      category_index = category_dir / '_index.md'
+                      
+                      if not category_index.exists():
+                          category_content = f"""---
+          title: "{info}"
+          description: "Services in the {category} category"
+          icon: "folder"
+          weight: 50
+          ---
+          
+          # {info}
+          
+          This section contains all services related to {category} in the illunare 4.0 platform.
+          
+          ## Services in this category
+          
+          {len(services_by_category[category])} services available.
+          """
+                          category_index.write_text(category_content)
+          
+          if __name__ == "__main__":
+              main()
+          EOF
+      
+      - name: 📤 Upload aggregated content
+        uses: actions/upload-artifact@v4
+        with:
+          name: aggregated-content
+          path: content/
+          retention-days: 1
+
+  # ==========================================
+  # 3. HUGO BUILD
+  # ==========================================
+  build:
+    name: 🏗️ Hugo Build
+    runs-on: ubuntu-latest
+    needs: [prepare, content-aggregation]
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      
+      - name: 📥 Download aggregated content
+        uses: actions/download-artifact@v4
+        with:
+          name: aggregated-content
+          path: content/
+      
+      - name: 🔧 Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+      
+      - name: 🐹 Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: go.sum
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      
+      - name: 🔧 Cache Hugo modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/hugo_cache
+            resources
+            .hugo_build.lock
+          key: ${{ needs.prepare.outputs.hugo_cache_key }}-${{ needs.prepare.outputs.content_hash }}
+          restore-keys: |
+            ${{ needs.prepare.outputs.hugo_cache_key }}-
+      
+      - name: 📦 Install dependencies
+        run: |
+          # Install Hugo modules
+          hugo mod get -u
+          hugo mod tidy
+          
+          # Install Node dependencies if package.json exists
+          if [[ -f "package.json" ]]; then
+            npm ci
+          fi
+      
+      - name: 🖼️ Optimize images
+        run: |
+          # Install image optimization tools
+          sudo apt-get update
+          sudo apt-get install -y jpegoptim optipng
+          
+          # Optimize images in static and content directories
+          find static content -type f \( -name "*.jpg" -o -name "*.jpeg" \) -exec jpegoptim --max=85 --strip-all {} \;
+          find static content -type f -name "*.png" -exec optipng -o2 {} \;
+      
+      - name: 🏗️ Build site
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          hugo \
+            --minify \
+            --enableGitInfo \
+            --baseURL "https://docs.illunare.com"
+      
+      - name: 🔍 Generate search index
+        run: |
+          pip install beautifulsoup4
+          python3 << 'EOF'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          
+          def extract_content_from_html(html_file):
+              try:
+                  with open(html_file, 'r', encoding='utf-8') as f:
+                      soup = BeautifulSoup(f.read(), 'html.parser')
+                  
+                  # Remove script and style elements
+                  for script in soup(["script", "style"]):
+                      script.decompose()
+                  
+                  # Extract title
+                  title = soup.find('title')
+                  title_text = title.get_text().strip() if title else ""
+                  
+                  # Extract main content
+                  main_content = soup.find('main') or soup.find('body')
+                  if main_content:
+                      content_text = main_content.get_text()
+                  else:
+                      content_text = soup.get_text()
+                  
+                  # Clean up text
+                  content_text = re.sub(r'\s+', ' ', content_text).strip()
+                  
+                  # Generate URL
+                  url = str(html_file).replace('public/', '/').replace('index.html', '')
+                  
+                  return {
+                      'title': title_text,
+                      'content': content_text[:500],
+                      'url': url
+                  }
+              except Exception as e:
+                  print(f"Error processing {html_file}: {e}")
+                  return None
+          
+          def main():
+              public_dir = Path('public')
+              
+              if not public_dir.exists():
+                  print("Public directory not found")
+                  return
+              
+              search_index = []
+              
+              # Process HTML files
+              for html_file in public_dir.rglob('*.html'):
+                  content_data = extract_content_from_html(html_file)
+                  if content_data and content_data['content']:
+                      search_index.append(content_data)
+              
+              # Write search index
+              index_file = public_dir / 'search-index.json'
+              with open(index_file, 'w', encoding='utf-8') as f:
+                  json.dump(search_index, f, ensure_ascii=False, indent=2)
+              
+              print(f"Generated search index with {len(search_index)} entries")
+          
+          if __name__ == "__main__":
+              main()
+          EOF
+      
+      - name: 🔗 Validate links
+        run: |
+          # Simple internal link validation
+          echo "🔗 Validating internal links..."
+          broken_links=0
+          
+          find public -name "*.html" | while read file; do
+            grep -oP 'href="\K[^"]*' "$file" | grep "^/" | while read link; do
+              target_file="public$link"
+              if [[ "$link" == */ ]]; then
+                target_file="${target_file}index.html"
+              fi
+              
+              if [[ ! -f "$target_file" ]]; then
+                echo "⚠️ Broken link in $(basename "$file"): $link"
+                broken_links=$((broken_links + 1))
+              fi
+            done
+          done
+          
+          echo "✅ Link validation completed"
+      
+      - name: 📊 Generate build statistics
+        run: |
+          echo "📊 Build Statistics:"
+          echo "  - Total pages: $(find public -name "*.html" | wc -l)"
+          echo "  - Total size: $(du -sh public | cut -f1)"
+          echo "  - Build time: $(date)"
+          echo "  - Hugo version: $(hugo version)"
+      
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-build
+          path: public/
+          retention-days: 7
+
+  # ==========================================
+  # 4. DEPLOYMENT
+  # ==========================================
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [prepare, build]
+    if: needs.prepare.outputs.should_deploy == 'true'
+    environment:
+      name: production
+      url: https://docs.illunare.com
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hugo-build
+          path: public/
+      
+      - name: 📄 Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: 📤 Upload to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/
+      
+      - name: 🚀 Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ==========================================
+  # 5. NOTIFICATION & REPORTING
+  # ==========================================
+  notify:
+    name: 📢 Notification & Reporting
+    runs-on: ubuntu-latest
+    needs: [prepare, content-aggregation, build, deploy]
+    if: always()
+    steps:
+      - name: 📊 Generate deployment report
+        run: |
+          echo "# 🚀 Hugo Documentation Deployment Report" > deployment-report.md
+          echo "" >> deployment-report.md
+          echo "**Deployment Date:** $(date)" >> deployment-report.md
+          echo "**Trigger:** ${{ github.event_name }}" >> deployment-report.md
+          echo "**Branch:** ${{ github.ref_name }}" >> deployment-report.md
+          echo "" >> deployment-report.md
+          
+          echo "## 📊 Job Status" >> deployment-report.md
+          echo "- **Preparation:** ${{ needs.prepare.result }}" >> deployment-report.md
+          echo "- **Content Aggregation:** ${{ needs.content-aggregation.result }}" >> deployment-report.md
+          echo "- **Build:** ${{ needs.build.result }}" >> deployment-report.md
+          echo "- **Deploy:** ${{ needs.deploy.result }}" >> deployment-report.md
+          echo "" >> deployment-report.md
+          
+          echo "## 🔧 Configuration" >> deployment-report.md
+          echo "- **Hugo Version:** ${{ env.HUGO_VERSION }}" >> deployment-report.md
+          echo "- **Node Version:** ${{ env.NODE_VERSION }}" >> deployment-report.md
+          echo "- **Go Version:** ${{ env.GO_VERSION }}" >> deployment-report.md
+          echo "" >> deployment-report.md
+          
+          echo "## 🌐 Deployment URLs" >> deployment-report.md
+          echo "- **Production:** https://docs.illunare.com" >> deployment-report.md
+          echo "- **GitHub Pages:** https://illunare-40.github.io/docs-site/" >> deployment-report.md
+          echo "" >> deployment-report.md
+          
+          echo "## 🔄 Next Steps" >> deployment-report.md
+          echo "- Documentation is automatically updated every 30 minutes" >> deployment-report.md
+          echo "- Content is aggregated from all illunare-40 repositories" >> deployment-report.md
+          echo "- Site is optimized for performance and SEO" >> deployment-report.md
+          
+          cat deployment-report.md
+      
+      - name: ✅ Success notification
+        if: needs.deploy.result == 'success'
+        run: |
+          echo "🎉 Documentation deployment successful!"
+          echo "📊 Site available at: https://docs.illunare.com"
+          echo "⏰ Next auto-update: $(date -d '+30 minutes')"
+      
+      - name: ❌ Failure notification
+        if: failure()
+        run: |
+          echo "💥 Documentation deployment failed!"
+          echo "🔍 Check the logs for details"
+          echo "📧 Consider manual intervention if critical" 

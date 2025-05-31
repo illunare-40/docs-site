@@ -54,52 +54,59 @@ jobs:
         id: discovery
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ORG_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN || secrets.ORG_ACCESS_TOKEN || github.token }}
           script: |
             const repos = [];
             let page = 1;
             const perPage = 100;
             
-            while (true) {
-              const response = await github.rest.repos.listForOrg({
-                org: 'illunare-40',
-                type: 'all',
-                sort: 'updated',
-                per_page: perPage,
-                page: page
-              });
-              
-              if (response.data.length === 0) break;
-              
-              for (const repo of response.data) {
-                // Incluir apenas repositórios com docs/ ou README.md atualizado recentemente
-                if (repo.name.includes('-service') || 
-                    repo.name.includes('-portal') || 
-                    repo.name.includes('-app') ||
-                    repo.name.includes('admin-') ||
-                    repo.name.includes('mobile-') ||
-                    repo.name.includes('landingpage-') ||
-                    repo.name === 'docs-site') {
-                  repos.push({
-                    name: repo.name,
-                    full_name: repo.full_name,
-                    clone_url: repo.clone_url,
-                    ssh_url: repo.ssh_url,
-                    updated_at: repo.updated_at,
-                    default_branch: repo.default_branch,
-                    language: repo.language,
-                    topics: repo.topics || []
-                  });
+            try {
+              while (true) {
+                const response = await github.rest.repos.listForOrg({
+                  org: 'illunare-40',
+                  type: 'all',
+                  sort: 'updated',
+                  per_page: perPage,
+                  page: page
+                });
+                
+                if (response.data.length === 0) break;
+                
+                for (const repo of response.data) {
+                  // Incluir apenas repositórios com docs/ ou README.md atualizado recentemente
+                  if (repo.name.includes('-service') || 
+                      repo.name.includes('-portal') || 
+                      repo.name.includes('-app') ||
+                      repo.name.includes('admin-') ||
+                      repo.name.includes('mobile-') ||
+                      repo.name.includes('landingpage-') ||
+                      repo.name === 'docs-site') {
+                    repos.push({
+                      name: repo.name,
+                      full_name: repo.full_name,
+                      clone_url: repo.clone_url,
+                      ssh_url: repo.ssh_url,
+                      updated_at: repo.updated_at,
+                      default_branch: repo.default_branch,
+                      language: repo.language,
+                      topics: repo.topics || []
+                    });
+                  }
                 }
+                
+                page++;
+                if (response.data.length < perPage) break;
               }
               
-              page++;
-              if (response.data.length < perPage) break;
+              console.log(`Descobertos ${repos.length} repositórios`);
+              core.setOutput('repositories', JSON.stringify(repos));
+              core.setOutput('total_repos', repos.length);
+            } catch (error) {
+              console.error('Error discovering repositories:', error);
+              // Fallback to empty array if discovery fails
+              core.setOutput('repositories', JSON.stringify([]));
+              core.setOutput('total_repos', 0);
             }
-            
-            console.log(`Descobertos ${repos.length} repositórios`);
-            core.setOutput('repositories', JSON.stringify(repos));
-            core.setOutput('total_repos', repos.length);
 
   # ==========================================
   # 2. COLETA DE DOCUMENTAÇÃO

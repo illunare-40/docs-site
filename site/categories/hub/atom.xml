@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hub on illunare 4.0 Enterprise Platform</title><link>https://illunare-40.github.io/docs-site/categories/hub/</link><description>Recent content in Hub on illunare 4.0 Enterprise Platform</description><generator>Hugo</generator><language>pt-br</language><lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://illunare-40.github.io/docs-site/categories/hub/atom.xml" rel="self" type="application/rss+xml"/><item><title>Documentation Hub</title><link>https://illunare-40.github.io/docs-site/docs/</link><pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate><guid>https://illunare-40.github.io/docs-site/docs/</guid><description>&lt;h1 id="-illunare-40-documentation-hub">📖 illunare 4.0 Documentation Hub &lt;a href="#-illunare-40-documentation-hub" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h1>
+&lt;div class="alert alert-info d-flex" role="alert">
+ &lt;div class="flex-shrink-1 alert-icon">
+ 
+ &lt;span class="material-icons size-20 me-2">
+ info
+ &lt;/span>&lt;/div>
+ 
+ 
+ &lt;div class="w-100">
+ 
+Welcome to the **comprehensive documentation** for the illunare 4.0 Enterprise Platform. This hub provides organized access to all technical documentation, guides, tutorials, and references.
+
+ &lt;/div>
+ &lt;/div>
+&lt;h2 id="-quick-navigation">🚀 Quick Navigation &lt;a href="#-quick-navigation" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h2>&lt;h3 id="for-developers">For Developers &lt;a href="#for-developers" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/api/">🔧 API Reference&lt;/a> - Complete API documentation&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/architecture/">🏗️ Architecture Guide&lt;/a> - System design and patterns&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/api/sdks/">💻 SDK &amp;amp; Libraries&lt;/a> - Development tools and libraries&lt;/li>
+&lt;/ul>
+&lt;h3 id="for-devops-engineers">For DevOps Engineers &lt;a href="#for-devops-engineers" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/devops/infrastructure/">☁️ Infrastructure Setup&lt;/a> - Cloud deployment guides&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/devops/cicd/">🔄 CI/CD Pipelines&lt;/a> - Automation workflows&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/devops/monitoring/">📊 Monitoring &amp;amp; Observability&lt;/a> - Platform monitoring&lt;/li>
+&lt;/ul>
+&lt;h3 id="for-business-users">For Business Users &lt;a href="#for-business-users" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h3>&lt;ul>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/getting-started/">🚀 Getting Started&lt;/a> - Quick start guides&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/industrial/">🏭 Industrial Solutions&lt;/a> - Industrial connectivity&lt;/li>
+&lt;li>&lt;a href="https://illunare-40.github.io/docs-site/docs/compliance/">🇧🇷 Compliance&lt;/a> - Brazilian regulations&lt;/li>
+&lt;/ul>
+&lt;h2 id="-documentation-categories">📚 Documentation Categories &lt;a href="#-documentation-categories" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h2>&lt;h3 id="-core-platform">🌟 Core Platform &lt;a href="#-core-platform" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h3>&lt;h4 id="platform-overview">Platform Overview &lt;a href="#platform-overview" class="anchor" aria-hidden="true">&lt;i class="material-icons align-middle">link&lt;/i>&lt;/a>&lt;/h4>&lt;ul>
+&lt;li>&lt;strong>Introduction&lt;/strong> to illunare 4.0&lt;/li>
+&lt;li>&lt;strong>Key features&lt;/strong> and capabilities&lt;/li>
+&lt;li>&lt;strong>Technology stack&lt;/strong> overview&lt;/li>
+&lt;li>&lt;strong>Performance&lt;/strong> metrics and SLAs&lt;/li>
+&lt;li>&lt;strong>Roadmap&lt;/strong> and future plans&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://illunare-40.github.io/docs-site/docs/platform-overview/">Explore Platform Overview →&lt;/a>&lt;/p></description></item></channel></rss>

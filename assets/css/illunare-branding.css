@@ -1,0 +1,566 @@
+/* ==============================================================================
+ * 🎨 illunare 4.0 Enterprise Branding & Modern Design System
+ * ==============================================================================
+ * Version: 5.0.0 Enterprise Edition
+ * Features: Sophisticated animations, responsive design, enterprise colors
+ * ============================================================================== */
+
+/* ==============================
+ * 🌟 CSS Custom Properties
+ * ============================== */
+:root {
+  /* Enterprise Color Palette */
+  --illunare-primary: #3f51b5;
+  --illunare-primary-light: #7986cb;
+  --illunare-primary-dark: #303f9f;
+  --illunare-secondary: #00bcd4;
+  --illunare-secondary-light: #4dd0e1;
+  --illunare-secondary-dark: #0097a7;
+  --illunare-accent: #ff4081;
+  --illunare-accent-light: #ff79b0;
+  --illunare-accent-dark: #c60055;
+  
+  /* Success & Status Colors */
+  --illunare-success: #4caf50;
+  --illunare-warning: #ff9800;
+  --illunare-error: #f44336;
+  --illunare-info: #2196f3;
+  
+  /* Gradient Definitions */
+  --illunare-gradient-primary: linear-gradient(135deg, var(--illunare-primary) 0%, var(--illunare-secondary) 100%);
+  --illunare-gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --illunare-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  
+  /* Typography */
+  --illunare-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --illunare-font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Monaco, monospace;
+  
+  /* Spacing & Layout */
+  --illunare-spacing-xs: 0.25rem;
+  --illunare-spacing-sm: 0.5rem;
+  --illunare-spacing-md: 1rem;
+  --illunare-spacing-lg: 1.5rem;
+  --illunare-spacing-xl: 2rem;
+  --illunare-spacing-xxl: 3rem;
+  
+  /* Border Radius */
+  --illunare-radius-sm: 4px;
+  --illunare-radius-md: 8px;
+  --illunare-radius-lg: 12px;
+  --illunare-radius-xl: 16px;
+  
+  /* Shadows */
+  --illunare-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --illunare-shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --illunare-shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --illunare-shadow-hero: 0 20px 40px rgba(63, 81, 181, 0.3);
+  
+  /* Animations */
+  --illunare-transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --illunare-transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --illunare-transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] {
+  --illunare-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --illunare-shadow-hero: 0 20px 40px rgba(63, 81, 181, 0.2);
+}
+
+/* ==============================
+ * 🦸 Hero Banner Section
+ * ============================== */
+.hero-banner {
+  background: var(--illunare-gradient-hero);
+  padding: var(--illunare-spacing-xxl) var(--illunare-spacing-lg);
+  margin: -1.5rem -1.5rem var(--illunare-spacing-xl) -1.5rem;
+  border-radius: 0 0 var(--illunare-radius-xl) var(--illunare-radius-xl);
+  box-shadow: var(--illunare-shadow-hero);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: white;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(10px, 10px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: var(--illunare-spacing-md);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: var(--illunare-spacing-xl);
+  opacity: 0.9;
+  line-height: 1.6;
+  animation: fade-in-up 0.8s ease-out 0.2s both;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--illunare-spacing-lg);
+  flex-wrap: wrap;
+  animation: fade-in-up 0.8s ease-out 0.4s both;
+}
+
+.hero-stats .stat {
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--illunare-spacing-sm) var(--illunare-spacing-md);
+  border-radius: var(--illunare-radius-lg);
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform var(--illunare-transition-normal);
+}
+
+.hero-stats .stat:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==============================
+ * 📊 Statistics Cards
+ * ============================== */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--illunare-spacing-lg);
+  margin: var(--illunare-spacing-xl) 0;
+}
+
+.stat-card {
+  background: var(--illunare-gradient-card);
+  padding: var(--illunare-spacing-lg);
+  border-radius: var(--illunare-radius-lg);
+  text-align: center;
+  border: 1px solid rgba(63, 81, 181, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all var(--illunare-transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--illunare-shadow-lg);
+  border-color: var(--illunare-primary);
+}
+
+.stat-card h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--illunare-primary);
+  margin: 0;
+  line-height: 1;
+}
+
+.stat-card p {
+  margin: var(--illunare-spacing-sm) 0 0 0;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* ==============================
+ * 🎨 Grid Layouts
+ * ============================== */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--illunare-spacing-lg);
+  margin: var(--illunare-spacing-xl) 0;
+}
+
+.grid-item {
+  background: var(--illunare-gradient-card);
+  padding: var(--illunare-spacing-lg);
+  border-radius: var(--illunare-radius-lg);
+  border: 1px solid rgba(63, 81, 181, 0.1);
+  transition: all var(--illunare-transition-normal);
+  backdrop-filter: blur(10px);
+}
+
+.grid-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--illunare-shadow-md);
+  border-color: var(--illunare-secondary);
+}
+
+.grid-item h3 {
+  margin-top: 0;
+  color: var(--illunare-primary);
+  font-weight: 600;
+}
+
+.grid-item h3 a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--illunare-transition-fast);
+}
+
+.grid-item h3 a:hover {
+  color: var(--illunare-secondary);
+}
+
+/* ==============================
+ * 📋 Enhanced Tables
+ * ============================== */
+table {
+  border-collapse: collapse;
+  margin: var(--illunare-spacing-lg) 0;
+  background: var(--illunare-gradient-card);
+  border-radius: var(--illunare-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--illunare-shadow-sm);
+}
+
+table thead tr {
+  background: var(--illunare-gradient-primary);
+  color: white;
+}
+
+table th,
+table td {
+  padding: var(--illunare-spacing-md);
+  text-align: left;
+  border-bottom: 1px solid rgba(63, 81, 181, 0.1);
+}
+
+table tbody tr {
+  transition: background-color var(--illunare-transition-fast);
+}
+
+table tbody tr:hover {
+  background-color: rgba(63, 81, 181, 0.05);
+}
+
+table tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-md-color-scheme="slate"] table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ==============================
+ * 🎯 Status Badges
+ * ============================== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--illunare-spacing-xs) var(--illunare-spacing-sm);
+  border-radius: var(--illunare-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.status-production {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--illunare-success);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.status-development {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--illunare-warning);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.status-beta {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--illunare-info);
+  border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+/* ==============================
+ * 🔧 Code Blocks Enhancement
+ * ============================== */
+.highlight {
+  position: relative;
+  margin: var(--illunare-spacing-md) 0;
+  border-radius: var(--illunare-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--illunare-shadow-sm);
+}
+
+.highlight::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--illunare-primary);
+  color: white;
+  padding: var(--illunare-spacing-xs) var(--illunare-spacing-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 0 0 0 var(--illunare-radius-sm);
+  z-index: 1;
+}
+
+/* ==============================
+ * 📱 Responsive Design
+ * ============================== */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stats-container {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--illunare-spacing-md);
+  }
+  
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    padding: var(--illunare-spacing-xl) var(--illunare-spacing-md);
+    margin: -1rem -1rem var(--illunare-spacing-lg) -1rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==============================
+ * 🎭 Animations & Effects
+ * ============================== */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ==============================
+ * 🌟 Interactive Elements
+ * ============================== */
+.interactive-element {
+  transition: all var(--illunare-transition-normal);
+  cursor: pointer;
+}
+
+.interactive-element:hover {
+  transform: scale(1.02);
+}
+
+.interactive-element:active {
+  transform: scale(0.98);
+}
+
+/* ==============================
+ * 🔗 Enhanced Links
+ * ============================== */
+a {
+  transition: color var(--illunare-transition-fast);
+}
+
+a:hover {
+  color: var(--illunare-secondary) !important;
+}
+
+/* ==============================
+ * 📊 Mermaid Diagram Styling
+ * ============================== */
+.mermaid {
+  text-align: center;
+  margin: var(--illunare-spacing-lg) 0;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(var(--illunare-shadow-sm));
+}
+
+/* ==============================
+ * 🎨 Custom Scrollbar
+ * ============================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(63, 81, 181, 0.1);
+  border-radius: var(--illunare-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--illunare-primary);
+  border-radius: var(--illunare-radius-sm);
+  transition: background var(--illunare-transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--illunare-primary-dark);
+}
+
+/* ==============================
+ * 🌙 Dark Mode Enhancements
+ * ============================== */
+[data-md-color-scheme="slate"] .hero-banner {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+[data-md-color-scheme="slate"] .stat-card,
+[data-md-color-scheme="slate"] .grid-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-md-color-scheme="slate"] .stat-card:hover,
+[data-md-color-scheme="slate"] .grid-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--illunare-secondary);
+}
+
+/* ==============================
+ * 🎯 Accessibility Improvements
+ * ============================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--illunare-secondary);
+  outline-offset: 2px;
+}
+
+button:focus,
+a:focus {
+  outline-color: var(--illunare-accent);
+}
+
+/* ==============================
+ * 🚀 Performance Optimizations
+ * ============================== */
+.hero-banner,
+.stat-card,
+.grid-item {
+  will-change: transform;
+}
+
+/* GPU acceleration for smooth animations */
+.hero-stats .stat,
+.stat-card,
+.grid-item {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ==============================
+ * 🎨 Print Styles
+ * ============================== */
+@media print {
+  .hero-banner {
+    background: none !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .stat-card,
+  .grid-item {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+} 

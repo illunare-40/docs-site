@@ -1,0 +1,510 @@
+# =============================================================================
+# 🚀 illunare 4.0 Enterprise Platform - Hugo Documentation Configuration
+# Lotus Docs Theme with Comprehensive Visual Identity & Automation
+# =============================================================================
+
+baseURL = 'https://illunare-40.github.io/docs-site/'
+languageCode = 'pt-br'
+defaultContentLanguage = 'pt-br'
+title = 'illunare 4.0 Enterprise Platform'
+contentDir = 'content'
+publishDir = 'site'
+enableEmoji = true
+enableGitInfo = true
+enableRobotsTXT = true
+
+# Hugo Build Configuration
+[build]
+writeStats = true
+
+[caches]
+[caches.getjson]
+dir = ":cacheDir/:project"
+maxAge = "10m"
+
+# =============================================================================
+# 📋 SITE METADATA & SEO
+# =============================================================================
+
+[params]
+# Basic site info
+description = "Next-generation enterprise platform with AI/ML, industrial connectivity, automotive integration, biometric security, and quantum-ready infrastructure. Built for Brazilian, LATAM, and worldwide markets."
+keywords = [
+    "illunare",
+    "enterprise",
+    "platform",
+    "AI",
+    "ML",
+    "industrial",
+    "automotive",
+    "biometric",
+    "quantum",
+    "Brazil",
+    "LATAM",
+]
+author = "illunare 4.0 Enterprise Team"
+copyright = "© 2025 illunare 4.0 Enterprise Platform. All rights reserved."
+
+# SEO & Social
+images = ["images/illunare-banner.png"]
+twitter = "@illunare40"
+github = "https://github.com/illunare-40"
+
+# Version information
+version = "4.0"
+versionMenu = true
+releaseNotes = "https://github.com/illunare-40/docs-site/releases"
+
+# =============================================================================
+# 🎨 LOTUS DOCS THEME CONFIGURATION
+# =============================================================================
+
+# Hugo Modules Configuration
+[module]
+# Hugo Bootstrap SCSS
+[[module.imports]]
+path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
+disable = false
+
+# Lotus Docs Theme
+[[module.imports]]
+path = "github.com/colinwilson/lotusdocs"
+disable = false
+
+# Lotus Docs Theme Parameters
+[params.lotusdocs]
+# Visual Identity & Branding
+primary_color = "#4F46E5"      # illunare indigo
+primary_color_dark = "#3730A3" # darker indigo for dark mode
+accent_color = "#06B6D4"       # illunare cyan
+accent_color_dark = "#0891B2"  # darker cyan for dark mode
+
+# Logo & Favicon
+logo = "images/illunare-logo.svg"
+favicon = "images/favicon.ico"
+
+# Typography
+google_fonts = [
+    "Inter:300,400,500,600,700",    # Primary font
+    "JetBrains Mono:400,500,600",   # Code font
+    "Urbanist:300,400,500,600,700", # illunare brand font
+]
+
+# Theme Options
+darkMode = true
+darkModeEnabled = true
+darkModeAsDefault = false
+
+# Layout Options
+breadcrumb = true
+breadcrumbSeparator = "/"
+toc = true
+tocMobile = true
+scrollSpy = true
+scrollSpyTitle = "On This Page"
+
+# Content Options
+contentTypes = ["docs"]
+docSectionName = "docs"
+
+# Footer
+footer_logo = "images/illunare-footer-logo.svg"
+footer_copyright = "© 2025 illunare 4.0 Enterprise Platform"
+
+# Edit Page
+edit_page = true
+repo_url = "https://github.com/illunare-40/docs-site"
+repo_branch = "main"
+
+# Last Modified
+showLastModified = true
+showAuthor = true
+showDate = true
+
+# Navigation
+showSectionNumbers = true
+showSubSectionNumbers = true
+
+# Search (FlexSearch)
+flexsearch = true
+searchIndex = true
+searchResultLimit = 10
+
+# Features
+mermaid = true
+katex = true
+prism = true
+feedback = true
+backToTop = true
+
+# Social Links
+social_links = [
+    { name = "GitHub", url = "https://github.com/illunare-40", icon = "github" },
+    { name = "Twitter", url = "https://twitter.com/illunare40", icon = "twitter" },
+    { name = "LinkedIn", url = "https://linkedin.com/company/illunare40", icon = "linkedin" },
+]
+
+# =============================================================================
+# 🌟 ILLUNARE 4.0 CUSTOM PARAMETERS
+# =============================================================================
+
+[params.illunare]
+# Platform Information
+platform_version = "4.0"
+release_date = "2025"
+status = "Enterprise Production"
+
+# Brazilian/LATAM Features
+primary_language = "pt-br"
+supported_languages = ["pt-br", "en", "es"]
+compliance_frameworks = ["LGPD", "BACEN", "SUSEP", "FENSEG"]
+
+# Technical Stack
+polyglot_runtime = ["Go 1.22", "Rust 1.80", "Elixir 1.18"]
+cloud_provider = "Google Cloud Platform"
+container_platform = "Kubernetes (GKE)"
+
+# AI/ML Features
+ai_models = ["DeepSeek R1/R3", "Ollama", "Custom LLMs"]
+inference_targets = ["<200ms", "Real-time", "Edge Computing"]
+
+# Security Features
+security_level = "Zero-Trust"
+biometric_support = true
+post_quantum_crypto = true
+
+# Performance Targets
+api_response_time = "<100ms"
+database_query_time = "<50ms"
+uptime_target = "99.99%"
+
+# Monitoring & Observability
+telemetry_stack = ["OpenTelemetry", "Prometheus", "Grafana", "Loki"]
+slo_driven_alerting = true
+
+# Integration Capabilities
+industrial_protocols = ["Profibus", "Profinet", "Modbus", "OPC-UA"]
+automotive_standards = ["CAN", "LIN", "FlexRay", "Automotive Ethernet"]
+government_apis = ["e-Social", "NFe", "CTe", "MDFe"]
+
+# =============================================================================
+# 📚 MENU CONFIGURATION
+# =============================================================================
+
+# Main Navigation Menu
+[[menu.primary]]
+name = "🏠 Home"
+url = "/"
+weight = 10
+
+[[menu.primary]]
+name = "📖 Documentation"
+url = "/docs/"
+weight = 20
+
+[[menu.primary]]
+name = "🚀 Getting Started"
+url = "/docs/getting-started/"
+weight = 30
+
+[[menu.primary]]
+name = "🔧 Services"
+url = "/docs/services/"
+weight = 40
+
+[[menu.primary]]
+name = "🏗️ Architecture"
+url = "/docs/architecture/"
+weight = 50
+
+[[menu.primary]]
+name = "📡 API Reference"
+url = "/docs/api/"
+weight = 60
+
+# Documentation Sidebar Menu (Auto-generated by weight)
+[[menu.docs]]
+name = "Overview"
+url = "/docs/"
+weight = 10
+pre = "🌟"
+
+[[menu.docs]]
+name = "Getting Started"
+url = "/docs/getting-started/"
+weight = 20
+pre = "🚀"
+
+[[menu.docs]]
+name = "Architecture"
+url = "/docs/architecture/"
+weight = 30
+pre = "🏗️"
+
+[[menu.docs]]
+name = "Core Services"
+url = "/docs/services/"
+weight = 40
+pre = "🔧"
+
+[[menu.docs]]
+name = "AI & Machine Learning"
+url = "/docs/ai-ml/"
+weight = 50
+pre = "🤖"
+
+[[menu.docs]]
+name = "Security"
+url = "/docs/security/"
+weight = 60
+pre = "🔐"
+
+[[menu.docs]]
+name = "Industrial Connectivity"
+url = "/docs/industrial/"
+weight = 70
+pre = "🏭"
+
+[[menu.docs]]
+name = "Automotive Integration"
+url = "/docs/automotive/"
+weight = 80
+pre = "🚗"
+
+[[menu.docs]]
+name = "Brazilian Compliance"
+url = "/docs/compliance/"
+weight = 90
+pre = "🇧🇷"
+
+[[menu.docs]]
+name = "DevOps & Infrastructure"
+url = "/docs/devops/"
+weight = 100
+pre = "☁️"
+
+[[menu.docs]]
+name = "API Reference"
+url = "/docs/api/"
+weight = 110
+pre = "📡"
+
+# Footer Menu
+[[menu.footer]]
+name = "Documentation"
+url = "/docs/"
+weight = 10
+
+[[menu.footer]]
+name = "GitHub"
+url = "https://github.com/illunare-40"
+weight = 20
+
+[[menu.footer]]
+name = "Support"
+url = "/docs/support/"
+weight = 30
+
+[[menu.footer]]
+name = "Roadmap"
+url = "/docs/roadmap/"
+weight = 40
+
+# =============================================================================
+# 🔧 MARKUP CONFIGURATION
+# =============================================================================
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+hardWraps = false
+xhtml = false
+[markup.goldmark.parser]
+autoHeadingID = true
+autoHeadingIDType = "github"
+[markup.goldmark.parser.attribute]
+block = true
+title = true
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+strikethrough = true
+table = true
+taskList = true
+typographer = true
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+ordered = false
+
+[markup.highlight]
+anchorLineNos = false
+codeFences = true
+guessSyntax = false
+lineAnchors = ""
+lineNoStart = 1
+lineNos = false
+lineNumbersInTable = true
+noClasses = false
+style = "github"
+tabWidth = 4
+
+# =============================================================================
+# 🌐 MULTILINGUAL SUPPORT
+# =============================================================================
+
+[languages]
+[languages.pt-br]
+languageName = "Português (Brasil)"
+weight = 1
+title = "illunare 4.0 Enterprise Platform"
+[languages.pt-br.params]
+description = "Plataforma empresarial de próxima geração com IA/ML, conectividade industrial, integração automotiva, segurança biométrica e infraestrutura quantum-ready."
+
+[languages.en]
+languageName = "English"
+weight = 2
+title = "illunare 4.0 Enterprise Platform"
+[languages.en.params]
+description = "Next-generation enterprise platform with AI/ML, industrial connectivity, automotive integration, biometric security, and quantum-ready infrastructure."
+
+[languages.es]
+languageName = "Español"
+weight = 3
+title = "illunare 4.0 Enterprise Platform"
+[languages.es.params]
+description = "Plataforma empresarial de próxima generación con IA/ML, conectividad industrial, integración automotriz, seguridad biométrica e infraestructura quantum-ready."
+
+# =============================================================================
+# 🔍 SEARCH CONFIGURATION
+# =============================================================================
+
+[params.search]
+enabled = true
+engine = "flexsearch"
+
+[params.search.flexsearch]
+index = "content"
+tokenize = "forward"
+depth = 2
+encode = "icase"
+suggest = true
+cache = true
+
+# =============================================================================
+# 📊 ANALYTICS & MONITORING
+# =============================================================================
+
+[params.analytics]
+google_analytics = "G-XXXXXXXXXX"      # Replace with actual GA4 ID
+plausible = true
+plausible_domain = "docs.illunare.com"
+
+# =============================================================================
+# 🎯 PWA & PERFORMANCE
+# =============================================================================
+
+[params.pwa]
+enabled = true
+manifest = "/manifest.json"
+sw = "/sw.js"
+
+[params.performance]
+lazy_loading = true
+preload_fonts = true
+minify_css = true
+minify_js = true
+optimize_images = true
+
+# =============================================================================
+# 🔐 SECURITY HEADERS
+# =============================================================================
+
+[params.security]
+csp_enabled = true
+hsts_enabled = true
+
+[params.security.headers]
+"Content-Security-Policy" = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.google-analytics.com *.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: *.google-analytics.com *.googletagmanager.com; connect-src 'self' *.google-analytics.com *.googletagmanager.com"
+"Strict-Transport-Security" = "max-age=31536000; includeSubDomains; preload"
+"X-Frame-Options" = "DENY"
+"X-Content-Type-Options" = "nosniff"
+"Referrer-Policy" = "strict-origin-when-cross-origin"
+"Permissions-Policy" = "geolocation=(), microphone=(), camera=()"
+
+# =============================================================================
+# 📝 CONTENT CONFIGURATION
+# =============================================================================
+
+[params.content]
+# Page settings
+show_breadcrumb = true
+show_toc = true
+show_edit_link = true
+show_last_modified = true
+show_reading_time = true
+
+# Content features
+enable_mermaid = true
+enable_katex = true
+enable_prism = true
+enable_copy_code = true
+
+# Comment system (optional)
+# comments_enabled = true
+# comments_provider = "giscus"
+
+# =============================================================================
+# 🏷️ TAXONOMIES
+# =============================================================================
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+author = "authors"
+service = "services"
+technology = "technologies"
+compliance = "compliance"
+
+# =============================================================================
+# 📤 OUTPUT FORMATS
+# =============================================================================
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+page = ["HTML"]
+section = ["HTML", "RSS"]
+
+[outputFormats]
+[outputFormats.RSS]
+mediaType = "application/rss+xml"
+baseName = "atom"
+
+[outputFormats.JSON]
+mediaType = "application/json"
+baseName = "index"
+
+# =============================================================================
+# 🚀 DEPLOYMENT CONFIGURATION
+# =============================================================================
+
+[deployment]
+# GitHub Pages
+[[deployment.targets]]
+name = "github-pages"
+URL = "gh://illunare-40/docs-site"
+
+# =============================================================================
+# 🔧 DEVELOPMENT CONFIGURATION
+# =============================================================================
+
+[server]
+port = 1314
+bind = "127.0.0.1"
+
+[development]
+disableFastRender = false
+disableLiveReload = false

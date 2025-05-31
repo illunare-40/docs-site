@@ -1,0 +1,23 @@
+2025-05-31 19:30:51 [INFO] [0;34mStarting Hugo automation pipeline...[0m
+2025-05-31 19:30:51 [INFO] [0;34mCommand: build[0m
+2025-05-31 19:30:51 [INFO] [0;34mLog file: /Users/oale/Desktop/illunare/docs-site/logs/hugo-automation/hugo_automation_20250531_193051.log[0m
+2025-05-31 19:30:51 [INFO] [0;34m🔍 Checking prerequisites...[0m
+2025-05-31 19:30:51 [INFO] [0;34mCurrent Hugo version: 0.147.6[0m
+2025-05-31 19:30:51 [SUCCESS] [0;32m✅ Hugo Extended found and compatible[0m
+2025-05-31 19:30:51 [SUCCESS] [0;32m✅ Prerequisites check completed[0m
+2025-05-31 19:30:51 [INFO] [0;34m🔧 Initializing Hugo modules...[0m
+2025-05-31 19:31:02 [SUCCESS] [0;32m✅ Hugo modules initialized[0m
+2025-05-31 19:31:02 [INFO] [0;34m📥 Aggregating content from repositories...[0m
+2025-05-31 19:31:02 [INFO] [0;34mGenerating mock service documentation...[0m
+2025-05-31 19:31:02 [SUCCESS] [0;32m✅ Content aggregation completed[0m
+2025-05-31 19:31:02 [INFO] [0;34m🖼️ Optimizing images...[0m
+2025-05-31 19:31:02 [SUCCESS] [0;32m✅ Image optimization completed[0m
+2025-05-31 19:31:02 [INFO] [0;34m🏗️ Building Hugo site...[0m
+2025-05-31 19:31:02 [SUCCESS] [0;32m✅ Hugo build completed successfully[0m
+2025-05-31 19:31:02 [INFO] [0;34m📊 Build statistics:[0m
+2025-05-31 19:31:02 [INFO] [0;34m  - Total pages:       41[0m
+2025-05-31 19:31:02 [INFO] [0;34m  - Total size:  11M[0m
+2025-05-31 19:31:02 [INFO] [0;34m  - Build time: Sat May 31 19:31:02 -03 2025[0m
+2025-05-31 19:31:02 [INFO] [0;34m🔍 Generating search index...[0m
+2025-05-31 19:31:02 [SUCCESS] [0;32m✅ Search index generated with basic entries[0m
+2025-05-31 19:31:03 [INFO] [0;34m🔗 Validating links...[0m

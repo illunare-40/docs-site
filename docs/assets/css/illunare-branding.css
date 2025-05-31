@@ -1,0 +1,630 @@
+/* 
+🚀 illunare 4.0 Enterprise Platform - Advanced Branding & Visual Identity
+=========================================================================
+
+Sophisticated CSS for enterprise-grade documentation with modern animations,
+industrial connectivity themes, and Brazilian compliance visual elements.
+
+Author: illunare 4.0 Platform Team
+Version: 4.0.0
+Date: January 28, 2025
+*/
+
+/* ============================================================================
+   ENTERPRISE COLOR PALETTE & CUSTOM PROPERTIES
+============================================================================ */
+
+:root {
+  /* Primary Brand Colors */
+  --illunare-primary: #667eea;
+  --illunare-primary-dark: #764ba2;
+  --illunare-secondary: #f093fb;
+  --illunare-secondary-dark: #f5576c;
+  --illunare-accent: #00bcd4;
+  --illunare-accent-dark: #0097a7;
+  
+  /* Enterprise Gradients */
+  --illunare-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --illunare-gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --illunare-gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --illunare-gradient-warning: linear-gradient(135deg, #ffb347 0%, #ff6b6b 100%);
+  --illunare-gradient-danger: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  
+  /* Industrial Colors */
+  --industrial-blue: #0066cc;
+  --industrial-orange: #ff6b35;
+  --automotive-green: #28a745;
+  --compliance-gold: #ffc107;
+  
+  /* Brazilian Theme Colors */
+  --brazil-green: #009c3b;
+  --brazil-yellow: #ffdf00;
+  --brazil-blue: #002776;
+  
+  /* Advanced Shadows */
+  --shadow-soft: 0 2px 8px rgba(102, 126, 234, 0.1);
+  --shadow-medium: 0 4px 16px rgba(102, 126, 234, 0.15);
+  --shadow-strong: 0 8px 32px rgba(102, 126, 234, 0.2);
+  --shadow-floating: 0 12px 48px rgba(102, 126, 234, 0.25);
+  
+  /* Animation Timings */
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.5s;
+  --animation-very-slow: 1s;
+}
+
+/* ============================================================================
+   SOPHISTICATED ANIMATIONS & MICRO-INTERACTIONS
+============================================================================ */
+
+@keyframes illunare-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-strong);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@keyframes illunare-slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes illunare-fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes illunare-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--illunare-primary);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--illunare-primary), 0 0 30px var(--illunare-primary);
+  }
+}
+
+/* ============================================================================
+   ENTERPRISE HEADER & NAVIGATION ENHANCEMENTS
+============================================================================ */
+
+.md-header {
+  background: var(--illunare-gradient-primary) !important;
+  box-shadow: var(--shadow-medium);
+  backdrop-filter: blur(10px);
+}
+
+.md-header__title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.md-tabs {
+  background: var(--illunare-gradient-secondary);
+  box-shadow: var(--shadow-soft);
+}
+
+.md-tabs__item {
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-tabs__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.md-tabs__link--active {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+/* ============================================================================
+   SOPHISTICATED CONTENT STYLING
+============================================================================ */
+
+.md-content {
+  animation: illunare-slideIn var(--animation-slow) ease-out;
+}
+
+.md-typeset h1 {
+  background: var(--illunare-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.md-typeset h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--illunare-gradient-primary);
+  border-radius: 2px;
+}
+
+.md-typeset h2 {
+  color: var(--illunare-primary);
+  font-weight: 700;
+  border-bottom: 2px solid var(--illunare-primary);
+  padding-bottom: 0.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.md-typeset h3 {
+  color: var(--illunare-primary-dark);
+  font-weight: 600;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.md-typeset h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: 4px;
+  height: 1.2rem;
+  background: var(--illunare-gradient-primary);
+  border-radius: 2px;
+}
+
+/* ============================================================================
+   ADVANCED CODE BLOCKS & SYNTAX HIGHLIGHTING
+============================================================================ */
+
+.md-typeset .highlight {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--animation-normal) ease;
+  position: relative;
+}
+
+.md-typeset .highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--illunare-gradient-primary);
+}
+
+.md-typeset .highlight:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+.md-typeset code {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: var(--illunare-primary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+/* ============================================================================
+   ENTERPRISE ADMONITIONS & INFO BOXES
+============================================================================ */
+
+.md-typeset .admonition {
+  border-radius: 12px;
+  box-shadow: var(--shadow-medium);
+  overflow: hidden;
+  transition: all var(--animation-normal) ease;
+  animation: illunare-fadeInScale var(--animation-slow) ease-out;
+}
+
+.md-typeset .admonition:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+}
+
+.md-typeset .admonition.note {
+  border-left: 4px solid var(--illunare-primary);
+}
+
+.md-typeset .admonition.tip {
+  border-left: 4px solid var(--automotive-green);
+}
+
+.md-typeset .admonition.warning {
+  border-left: 4px solid var(--compliance-gold);
+}
+
+.md-typeset .admonition.danger {
+  border-left: 4px solid #dc3545;
+}
+
+.md-typeset .admonition-title {
+  background: var(--illunare-gradient-primary);
+  color: white;
+  font-weight: 700;
+  padding: 1rem;
+  margin: 0;
+}
+
+/* ============================================================================
+   INDUSTRIAL CONNECTIVITY THEME ELEMENTS
+============================================================================ */
+
+.industrial-profibus {
+  background: linear-gradient(135deg, var(--industrial-orange) 0%, #e55a00 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.industrial-profinet {
+  background: linear-gradient(135deg, var(--industrial-blue) 0%, #0052a3 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.automotive-badge {
+  background: linear-gradient(135deg, var(--automotive-green) 0%, #1e7e34 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ============================================================================
+   BRAZILIAN COMPLIANCE VISUAL ELEMENTS
+============================================================================ */
+
+.brazil-compliance {
+  background: linear-gradient(135deg, var(--brazil-green) 0%, var(--brazil-blue) 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.brazil-compliance::before {
+  content: '🇧🇷';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.lgpd-compliant {
+  border: 2px solid var(--brazil-green);
+  background: linear-gradient(135deg, rgba(0, 156, 59, 0.1) 0%, rgba(0, 156, 59, 0.05) 100%);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+/* ============================================================================
+   SOPHISTICATED TABLES & DATA PRESENTATION
+============================================================================ */
+
+.md-typeset table {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  margin: 2rem 0;
+}
+
+.md-typeset thead tr {
+  background: var(--illunare-gradient-primary);
+}
+
+.md-typeset thead th {
+  color: white;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+.md-typeset tbody tr {
+  transition: all var(--animation-fast) ease;
+}
+
+.md-typeset tbody tr:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  transform: scale(1.01);
+}
+
+.md-typeset td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+/* ============================================================================
+   ADVANCED BUTTONS & INTERACTIVE ELEMENTS
+============================================================================ */
+
+.illunare-btn {
+  background: var(--illunare-gradient-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all var(--animation-normal) ease;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.illunare-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+  color: white;
+}
+
+.illunare-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left var(--animation-slow) ease;
+}
+
+.illunare-btn:hover::before {
+  left: 100%;
+}
+
+/* ============================================================================
+   ENTERPRISE CARDS & PANELS
+============================================================================ */
+
+.enterprise-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--animation-normal) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.enterprise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--illunare-gradient-primary);
+}
+
+.enterprise-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-floating);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: all var(--animation-normal) ease;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--illunare-primary);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
+============================================================================ */
+
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .enterprise-card {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .md-typeset h1 {
+    font-size: 1.8rem;
+  }
+  
+  .illunare-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================================
+   HOT RELOADING & ELIXIR THEME ELEMENTS
+============================================================================ */
+
+.hot-reload-indicator {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: illunare-pulse 2s infinite;
+}
+
+.elixir-badge {
+  background: linear-gradient(135deg, #4B275F 0%, #732d91 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ============================================================================
+   AI & MACHINE LEARNING VISUAL ELEMENTS
+============================================================================ */
+
+.ai-powered {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-powered::before {
+  content: '🤖';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  animation: illunare-glow 3s infinite;
+}
+
+.ml-model-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  box-shadow: var(--shadow-medium);
+}
+
+/* ============================================================================
+   QUANTUM & ADVANCED TECHNOLOGY INDICATORS
+============================================================================ */
+
+.quantum-ready {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 700;
+  display: inline-block;
+  margin: 0.5rem;
+  box-shadow: var(--shadow-medium);
+  animation: illunare-glow 4s infinite;
+}
+
+.enterprise-grade {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+  color: #2d3436;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ============================================================================
+   FOOTER & CONTACT ENHANCEMENTS
+============================================================================ */
+
+.md-footer {
+  background: var(--illunare-gradient-primary);
+  color: white;
+}
+
+.md-footer-meta {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   SCROLL ENHANCEMENTS & PAGE TRANSITIONS
+============================================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.md-main {
+  animation: illunare-slideIn var(--animation-slow) ease-out;
+}
+
+/* ============================================================================
+   PRINT STYLES FOR ENTERPRISE DOCUMENTATION
+============================================================================ */
+
+@media print {
+  .enterprise-card,
+  .feature-card {
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+  
+  .illunare-btn {
+    background: #6c757d;
+    color: white;
+  }
+  
+  .hot-reload-indicator,
+  .ai-powered,
+  .quantum-ready {
+    background: #6c757d;
+    color: white;
+  }
+} 

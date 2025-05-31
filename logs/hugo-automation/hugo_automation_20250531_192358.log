@@ -1,0 +1,7 @@
+2025-05-31 19:23:58 [INFO] [0;34mStarting Hugo automation pipeline...[0m
+2025-05-31 19:23:58 [INFO] [0;34mCommand: content[0m
+2025-05-31 19:23:59 [INFO] [0;34mLog file: /Users/oale/Desktop/illunare/docs-site/logs/hugo-automation/hugo_automation_20250531_192358.log[0m
+2025-05-31 19:23:59 [INFO] [0;34m🔍 Checking prerequisites...[0m
+2025-05-31 19:23:59 [INFO] [0;34mCurrent Hugo version: 0.147.6[0m
+2025-05-31 19:23:59 [WARN] [1;33mHugo version mismatch. Installing v0.140.0...[0m
+2025-05-31 19:23:59 [INFO] [0;34m📦 Installing Hugo Extended v0.140.0...[0m
